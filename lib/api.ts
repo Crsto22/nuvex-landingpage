@@ -7,6 +7,11 @@ export type PlanCode =
   | 'emprendedor'
   | 'crecimiento'
   | 'empresarial'
+  | 'pos_basico'
+  | 'asistencias_basico'
+  | 'asistencias_pro'
+  | 'completo_emprende'
+  | 'completo_empresa'
 
 export type PlanLimits = {
   users: number
@@ -17,6 +22,8 @@ export type PlanLimits = {
   documents: number
   documentQueries: number
   storageBytes: number
+  attendanceEmployees: number
+  attendanceQrPoints: number
 }
 
 export type PlanDefinition = {
@@ -49,6 +56,20 @@ export type AffiliateCodeResponse =
       discountPercent: '0.00'
       reason: 'invalid' | 'inactive'
     }
+
+export type AttendancePricing = {
+  employeeUnitPrice: string
+  qrPointUnitPrice: string
+  annualDiscountPercent: string
+  currency: 'PEN'
+  includesIgv: true
+  updatedAt: string
+  updatedBy?: {
+    id: string
+    name: string
+    email: string
+  } | null
+}
 
 export async function apiRequest<T>(path: string): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`)

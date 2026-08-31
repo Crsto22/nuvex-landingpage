@@ -2,9 +2,25 @@
 
 import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Check } from 'phosphor-react'
+import {
+  Barcode,
+  Buildings,
+  Check,
+  CheckCircle,
+  Database,
+  Minus,
+  Package,
+  Plus,
+  Receipt,
+  Storefront,
+  Users,
+  WhatsappLogo,
+  XCircle,
+} from 'phosphor-react'
+import type { Icon } from 'phosphor-react'
 import {
   AffiliateCodeResponse,
+  AttendancePricing,
   PlanCode,
   PlanDefinition,
   apiRequest,
@@ -12,7 +28,11 @@ import {
 
 export default function Pricing() {
   const [isAnnual, setIsAnnual] = useState(false)
+  const [pricingView, setPricingView] = useState<'pos' | 'attendance'>('pos')
   const [plans, setPlans] = useState<PlanDefinition[]>([])
+  const [attendancePricing, setAttendancePricing] = useState<AttendancePricing | null>(null)
+  const [attendanceEmployees, setAttendanceEmployees] = useState(10)
+  const [attendanceQrPoints, setAttendanceQrPoints] = useState(1)
   const [loadingPlans, setLoadingPlans] = useState(true)
   const [plansError, setPlansError] = useState('')
   const [affiliateCode, setAffiliateCode] = useState('')
@@ -22,10 +42,14 @@ export default function Pricing() {
   useEffect(() => {
     let active = true
 
-    apiRequest<PlanDefinition[]>('/plans')
-      .then((result) => {
+    Promise.all([
+      apiRequest<PlanDefinition[]>('/plans'),
+      apiRequest<AttendancePricing>('/plans/attendance-pricing').catch(() => null),
+    ])
+      .then(([result, attendance]) => {
         if (!active) return
         setPlans(result)
+        setAttendancePricing(attendance)
         setPlansError('')
       })
       .catch(() => {
@@ -43,6 +67,28 @@ export default function Pricing() {
 
   const highlightedCode = useMemo(() => getHighlightedCode(plans), [plans])
   const activeAffiliate = affiliate?.valid ? affiliate : null
+  const attendanceMonthlyTotal = attendancePricing
+    ? roundMoney(
+        Number(attendancePricing.employeeUnitPrice) * attendanceEmployees +
+          Number(attendancePricing.qrPointUnitPrice) * attendanceQrPoints,
+      )
+    : 0
+  const attendanceAffiliateDiscountPercent = Number(activeAffiliate?.discountPercent ?? 0)
+  const attendanceBaseTotal = isAnnual
+    ? roundMoney(
+        attendanceMonthlyTotal *
+          12 *
+          (1 - Number(attendancePricing?.annualDiscountPercent ?? 0) / 100),
+      )
+    : attendanceMonthlyTotal
+  const attendanceTotal =
+    attendanceAffiliateDiscountPercent > 0
+      ? roundMoney(
+          attendanceBaseTotal -
+            (attendanceBaseTotal * attendanceAffiliateDiscountPercent) / 100,
+        )
+      : attendanceBaseTotal
+  const attendanceAffiliateDiscountAmount = roundMoney(attendanceBaseTotal - attendanceTotal)
 
   async function applyAffiliateCode(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -118,6 +164,26 @@ export default function Pricing() {
         </motion.div>
 
         <div className="mb-12 flex flex-col items-center gap-6 md:mb-20">
+          <div className="grid w-full max-w-md grid-cols-2 rounded-xl border border-gray-200 bg-white p-1 shadow-sm">
+            {[
+              ['pos', 'POS'],
+              ['attendance', 'Asistencias'],
+            ].map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setPricingView(value as 'pos' | 'attendance')}
+                className={`rounded-lg px-4 py-3 text-sm font-bold transition-all ${
+                  pricingView === value
+                    ? 'bg-[#101d69] text-white shadow-sm'
+                    : 'text-[#101d69] hover:bg-gray-50'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
           <div className="flex items-center justify-center gap-4">
             <span
               className={`text-sm font-semibold md:text-base ${
@@ -197,7 +263,7 @@ export default function Pricing() {
           </div>
         )}
 
-        {!loadingPlans && !plansError && (
+        {!loadingPlans && !plansError && pricingView === 'pos' && (
           <motion.div
             className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-5"
             variants={containerVariants}
@@ -209,60 +275,50 @@ export default function Pricing() {
               const highlighted = plan.code === highlightedCode
               const price = getPlanPrice(plan, isAnnual, activeAffiliate)
               const showDiscount = price.previous !== price.current
-              const cta = plan.code === 'empresarial' ? 'Contactar ventas' : 'Comenzar ahora'
+              const cta = plan.code === 'prueba' ? '7 dias de prueba' : 'Solicitar por WhatsApp'
 
               return (
                 <motion.div
                   key={plan.code}
-                  className={`relative rounded-2xl bg-white transition-all duration-300 group ${
+                  className={`group relative flex flex-col rounded-lg bg-white transition-all duration-300 ${
                     highlighted
-                      ? 'z-10 shadow-2xl ring-2 ring-[#fd741a] xl:scale-105'
-                      : 'z-0 border border-gray-200 shadow-lg hover:border-[#101d69]'
+                      ? 'z-10 border-2 border-[#101d69] shadow-2xl xl:scale-[1.02]'
+                      : 'z-0 border border-[#dbe3f3] shadow-sm hover:border-[#101d69]'
                   }`}
                   variants={cardVariants}
                   whileHover={{ y: highlighted ? -8 : -4 }}
                 >
                   {highlighted && (
-                    <div className="pointer-events-none absolute -top-20 left-1/2 z-20 h-28 w-28 -translate-x-1/2 md:-top-24 md:h-32 md:w-32">
-                      <img
-                        src="/tu-mascota-entera.png"
-                        alt="Mascota recomendando el plan"
-                        className="h-full w-full object-contain drop-shadow-2xl"
-                      />
+                    <div className="absolute -top-3 left-1/2 z-20 -translate-x-1/2 rounded-full bg-[#101d69] px-4 py-1 text-xs font-extrabold text-white shadow-lg">
+                      Mas popular
                     </div>
                   )}
 
-                  {highlighted && (
-                    <div className="absolute left-0 right-0 top-6 z-10 bg-gradient-to-r from-[#fd741a] to-[#f5941a] py-2 text-center text-xs font-bold tracking-widest text-white shadow-sm">
-                      Recomendado
-                    </div>
-                  )}
-
-                  <div className={`p-6 ${highlighted ? 'pt-24 md:pt-28' : ''}`}>
-                    <h3 className="mb-2 text-2xl font-bold text-[#101d69]">
+                  <div className="flex flex-1 flex-col p-4 md:p-5">
+                    <h3 className="mb-2 text-xl font-extrabold text-[#101d69]">
                       {plan.name}
                     </h3>
-                    <p className="mb-6 min-h-10 text-sm text-gray-600">
+                    <p className="mb-4 min-h-12 text-xs leading-relaxed text-[#1f2f6b]/75">
                       {planDescription(plan)}
                     </p>
 
-                    <div className="mb-8 min-h-32">
+                    <div className="mb-5 min-h-24">
                       {showDiscount && (
                         <div className="mb-1 flex flex-wrap items-center gap-2">
-                          <span className="text-base font-medium text-gray-400 line-through">
+                          <span className="text-sm font-medium text-gray-400 line-through">
                             S/. {formatMoney(price.previous)}
                           </span>
-                          <span className="rounded-md bg-[#fd741a]/10 px-2 py-1 text-xs font-bold text-[#fd741a]">
+                          <span className="rounded-md bg-[#fd741a]/10 px-2 py-1 text-[11px] font-bold text-[#fd741a]">
                             -{price.discountPercent}% OFF
                           </span>
                         </div>
                       )}
                       <div className="mb-2 flex flex-wrap items-baseline gap-1">
-                        <span className="text-2xl font-bold text-[#101d69] md:text-3xl">
+                        <span className="text-2xl font-extrabold text-black md:text-3xl">
                           {price.free ? price.label : `S/. ${formatMoney(price.current)}`}
                         </span>
                         {!price.free && (
-                          <span className="text-sm text-gray-600">
+                          <span className="text-xs font-semibold text-[#101d69]/80">
                             {isAnnual ? '/anio' : '/mes'}
                           </span>
                         )}
@@ -281,49 +337,157 @@ export default function Pricing() {
                         )}
                     </div>
 
-                    <a
-                      href="#contacto"
-                      className={`mb-8 block w-full rounded-lg px-4 py-3 text-center font-semibold transition-all ${
-                        highlighted
-                          ? 'bg-[#101d69] text-white shadow-lg hover:bg-[#0d1650] hover:shadow-xl'
-                          : 'bg-gray-100 text-[#101d69] hover:bg-gray-200'
-                      }`}
-                    >
-                      {cta}
-                    </a>
-
-                    <div className="space-y-4 border-t border-gray-200 pt-8">
-                      {plan.highlights.map((feature) => (
-                        <div key={feature} className="flex items-start gap-3">
-                          <div className="flex-shrink-0 pt-1">
-                            <Check
-                              size={20}
-                              weight="bold"
-                              className="text-[#fd741a]"
-                            />
-                          </div>
-                          <p className="text-sm text-gray-700 md:text-base">
-                            {feature}
-                          </p>
-                        </div>
-                      ))}
-                      <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0 pt-1">
-                          <Check size={20} weight="bold" className="text-[#fd741a]" />
-                        </div>
-                        <p className="text-sm text-gray-700 md:text-base">
-                          {formatLimit(plan.limits.documents)} comprobantes al mes
-                        </p>
+                    <div className="mb-5 border-t border-[#dbe3f3] pt-4">
+                      <p className="mb-3 text-[11px] font-extrabold uppercase tracking-wide text-[#101d69]">
+                        Capacidad incluida
+                      </p>
+                      <div className="space-y-2.5">
+                        {capacityItems(plan).map((item) => (
+                          <PlanDetail key={item.label} {...item} />
+                        ))}
                       </div>
                     </div>
-                  </div>
 
-                  {highlighted && (
-                    <div className="absolute -bottom-1 -right-1 -z-10 h-32 w-32 rounded-full bg-[#fd741a]/10 blur-2xl" />
-                  )}
+                    <div className="mb-5 border-t border-[#dbe3f3] pt-4">
+                      <p className="mb-3 text-[11px] font-extrabold uppercase tracking-wide text-[#101d69]">
+                        Funcionalidades
+                      </p>
+                      <div className="space-y-2.5">
+                        {featureItems(plan).map((item) => (
+                          <PlanFeature key={item.label} {...item} />
+                        ))}
+                      </div>
+                    </div>
+
+                    <a
+                      href="#contacto"
+                      className={`mt-auto flex w-full items-center justify-center gap-2 rounded-lg px-3 py-3 text-sm font-extrabold transition-all ${
+                        highlighted
+                          ? 'bg-[#101d69] text-white shadow-lg hover:bg-[#0d1650] hover:shadow-xl'
+                          : plan.code === 'prueba'
+                            ? 'bg-gray-100 text-[#101d69] hover:bg-gray-200'
+                            : 'bg-[#22c55e] text-white shadow-sm hover:bg-[#16a34a]'
+                      }`}
+                    >
+                      {plan.code !== 'prueba' && <WhatsappLogo size={17} weight="bold" />}
+                      {cta}
+                    </a>
+                  </div>
                 </motion.div>
               )
             })}
+          </motion.div>
+        )}
+
+        {!loadingPlans && !plansError && pricingView === 'attendance' && attendancePricing && (
+          <motion.div
+            className="mx-auto grid max-w-5xl grid-cols-1 overflow-hidden rounded-2xl border border-[#14b8a6]/30 bg-white shadow-xl lg:grid-cols-[1.1fr_0.9fr]"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+          >
+            <motion.div className="p-6 md:p-8" variants={cardVariants}>
+              <div className="mb-6 w-fit rounded-full bg-[#14b8a6]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#0f766e]">
+                Asistencias
+              </div>
+              <h3 className="mb-3 text-3xl font-bold text-[#101d69] md:text-4xl">
+                Calcula tu plan de asistencias
+              </h3>
+              <p className="mb-8 text-base leading-relaxed text-gray-600">
+                Ajusta trabajadores y puntos QR para ver cuanto pagaras por el control de asistencia.
+              </p>
+
+              <div className="space-y-4">
+                <QuantityControl
+                  label="Trabajadores"
+                  helper={`S/. ${formatMoney(Number(attendancePricing.employeeUnitPrice))} por trabajador`}
+                  value={attendanceEmployees}
+                  min={1}
+                  onDecrease={() => setAttendanceEmployees((value) => Math.max(1, value - 1))}
+                  onIncrease={() => setAttendanceEmployees((value) => value + 1)}
+                />
+                <QuantityControl
+                  label="Puntos QR"
+                  helper={`S/. ${formatMoney(Number(attendancePricing.qrPointUnitPrice))} por punto QR`}
+                  value={attendanceQrPoints}
+                  min={1}
+                  onDecrease={() => setAttendanceQrPoints((value) => Math.max(1, value - 1))}
+                  onIncrease={() => setAttendanceQrPoints((value) => value + 1)}
+                />
+              </div>
+
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                {[
+                  'Marcacion por QR',
+                  'Historial de entradas y salidas',
+                  'Reportes de asistencia',
+                  'Gestion de trabajadores',
+                ].map((feature) => (
+                  <div key={feature} className="flex items-start gap-3">
+                    <div className="flex-shrink-0 pt-1">
+                      <Check size={20} weight="bold" className="text-[#14b8a6]" />
+                    </div>
+                    <p className="text-sm text-gray-700 md:text-base">
+                      {feature}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="flex flex-col justify-between bg-[#101d69] p-6 text-white md:p-8"
+              variants={cardVariants}
+            >
+              <div>
+                <p className="mb-2 text-sm font-semibold text-white/70">
+                  Total {isAnnual ? 'anual' : 'mensual'}
+                </p>
+                <div className="mb-2 flex flex-wrap items-end gap-2">
+                  <span className="text-4xl font-extrabold md:text-5xl">
+                    S/. {formatMoney(attendanceTotal)}
+                  </span>
+                  <span className="pb-2 text-sm text-white/70">
+                    {isAnnual ? '/anio' : '/mes'}
+                  </span>
+                </div>
+                {isAnnual && (
+                  <p className="text-sm font-semibold text-[#fd741a]">
+                    S/. {formatMoney(attendanceTotal / 12)} promedio mensual
+                  </p>
+                )}
+                <div className="mt-8 space-y-3 rounded-xl bg-white/10 p-4">
+                  <div className="flex justify-between gap-4 text-sm">
+                    <span className="text-white/70">{attendanceEmployees} trabajadores</span>
+                    <span>S/. {formatMoney(Number(attendancePricing.employeeUnitPrice) * attendanceEmployees)}</span>
+                  </div>
+                  <div className="flex justify-between gap-4 text-sm">
+                    <span className="text-white/70">{attendanceQrPoints} puntos QR</span>
+                    <span>S/. {formatMoney(Number(attendancePricing.qrPointUnitPrice) * attendanceQrPoints)}</span>
+                  </div>
+                  {isAnnual && Number(attendancePricing.annualDiscountPercent) > 0 && (
+                    <div className="flex justify-between gap-4 border-t border-white/15 pt-3 text-sm">
+                      <span className="text-white/70">Descuento anual</span>
+                      <span>-{attendancePricing.annualDiscountPercent}%</span>
+                    </div>
+                  )}
+                  {attendanceAffiliateDiscountPercent > 0 && (
+                    <div className="flex justify-between gap-4 border-t border-white/15 pt-3 text-sm">
+                      <span className="text-white/70">Descuento afiliado</span>
+                      <span>-S/. {formatMoney(attendanceAffiliateDiscountAmount)}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <a
+                href="#contacto"
+                className="mt-8 block w-full rounded-lg bg-[#fd741a] px-4 py-3 text-center font-bold text-white shadow-lg transition hover:bg-[#e86512]"
+              >
+                Solicitar asistencias
+              </a>
+            </motion.div>
           </motion.div>
         )}
 
@@ -347,10 +511,106 @@ export default function Pricing() {
 }
 
 function getHighlightedCode(plans: PlanDefinition[]): PlanCode | null {
-  if (plans.some((plan) => plan.code === 'crecimiento')) return 'crecimiento'
+  if (plans.some((plan) => plan.code === 'emprendedor')) return 'emprendedor'
 
   const paidPlans = plans.filter((plan) => plan.code !== 'prueba')
   return paidPlans[1]?.code ?? paidPlans[0]?.code ?? plans[0]?.code ?? null
+}
+
+function capacityItems(plan: PlanDefinition) {
+  return [
+    {
+      icon: Storefront,
+      label: 'Tiendas',
+      value: formatLimit(plan.limits.branches),
+    },
+    {
+      icon: Buildings,
+      label: 'Almacenes',
+      value: formatLimit(plan.limits.warehouses),
+    },
+    {
+      icon: Users,
+      label: 'Usuarios',
+      value: formatLimit(plan.limits.users),
+    },
+    {
+      icon: Package,
+      label: 'Productos',
+      value: formatLimit(plan.limits.products),
+    },
+    {
+      icon: Barcode,
+      label: 'Variantes',
+      value: formatLimit(plan.limits.variants),
+    },
+    {
+      icon: Receipt,
+      label: 'Comprobantes',
+      value:
+        plan.code === 'prueba'
+          ? `${formatLimit(plan.limits.documents)} / prueba`
+          : `${formatLimit(plan.limits.documents)} / mes`,
+    },
+    {
+      icon: Database,
+      label: 'Consultas DNI/RUC',
+      value:
+        plan.code === 'prueba'
+          ? `${formatLimit(plan.limits.documentQueries)} / prueba`
+          : `${formatLimit(plan.limits.documentQueries)} / mes`,
+    },
+  ]
+}
+
+function featureItems(plan: PlanDefinition) {
+  const keys = new Set(plan.moduleKeys)
+  return [
+    {
+      label: 'Facturacion electronica',
+      included: keys.has('comprobantes'),
+    },
+    {
+      label: 'Ventas POS',
+      included: keys.has('ventas-pos'),
+    },
+    {
+      label: 'Caja',
+      included: keys.has('caja'),
+    },
+    {
+      label: 'Cotizaciones y clientes',
+      included: keys.has('cotizaciones') && keys.has('clientes'),
+    },
+    {
+      label: 'Catalogo, stock y Kardex',
+      included: keys.has('productos') && keys.has('stock-kardex'),
+    },
+    {
+      label: 'Administracion de usuarios',
+      included: keys.has('usuarios'),
+    },
+    {
+      label: 'Reportes de ventas y productos',
+      included: keys.has('reportes-ventas') && keys.has('reportes-productos'),
+    },
+    {
+      label: 'Reporte de clientes',
+      included: keys.has('reportes-clientes'),
+    },
+    {
+      label: 'Reporte de usuarios',
+      included: keys.has('reportes-usuarios'),
+    },
+    {
+      label: 'GRE y conductores',
+      included: keys.has('gre-remitente') && keys.has('conductores'),
+    },
+    {
+      label: plan.code === 'empresarial' ? 'Soporte prioritario' : 'Soporte estandar',
+      included: true,
+    },
+  ]
 }
 
 function planDescription(plan: PlanDefinition) {
@@ -360,6 +620,11 @@ function planDescription(plan: PlanDefinition) {
     emprendedor: 'Para tiendas que empiezan a crecer',
     crecimiento: 'La opcion mas completa para operar',
     empresarial: 'Para operaciones con mas volumen',
+    pos_basico: 'POS e inventario sin asistencias',
+    asistencias_basico: 'Asistencias para equipos pequenos',
+    asistencias_pro: 'Asistencias para equipos en crecimiento',
+    completo_emprende: 'POS y asistencias para negocios pequenos',
+    completo_empresa: 'POS y asistencias completo',
   }
 
   return descriptions[plan.code]
@@ -411,6 +676,84 @@ function affiliateMessage(affiliate: AffiliateCodeResponse | null) {
         ? 'Este codigo no esta disponible.'
         : 'Codigo de afiliado no valido.'}
     </p>
+  )
+}
+
+function PlanDetail({
+  icon: IconComponent,
+  label,
+  value,
+}: {
+  icon: Icon
+  label: string
+  value: string
+}) {
+  return (
+    <div className="flex items-center gap-2 text-xs">
+      <IconComponent size={15} weight="bold" className="shrink-0 text-[#101d69]/65" />
+      <span className="min-w-0 flex-1 text-[#101d69]/75">{label}</span>
+      <span className="text-right font-extrabold text-black">{value}</span>
+    </div>
+  )
+}
+
+function PlanFeature({ label, included }: { label: string; included: boolean }) {
+  const IconComponent = included ? CheckCircle : XCircle
+
+  return (
+    <div className={`flex items-center gap-2 text-xs ${included ? 'text-gray-800' : 'text-gray-400'}`}>
+      <IconComponent
+        size={15}
+        weight="fill"
+        className={included ? 'shrink-0 text-emerald-500' : 'shrink-0 text-gray-300'}
+      />
+      <span>{label}</span>
+    </div>
+  )
+}
+
+function QuantityControl({
+  label,
+  helper,
+  value,
+  min,
+  onDecrease,
+  onIncrease,
+}: {
+  label: string
+  helper: string
+  value: number
+  min: number
+  onDecrease: () => void
+  onIncrease: () => void
+}) {
+  return (
+    <div className="flex items-center justify-between gap-4 rounded-xl border border-gray-200 bg-gray-50 p-4">
+      <div>
+        <p className="font-bold text-[#101d69]">{label}</p>
+        <p className="text-sm text-gray-500">{helper}</p>
+      </div>
+      <div className="flex items-center gap-3 rounded-full bg-white p-1 shadow-sm">
+        <button
+          type="button"
+          onClick={onDecrease}
+          disabled={value <= min}
+          className="flex h-9 w-9 items-center justify-center rounded-full text-[#101d69] transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <Minus size={16} weight="bold" />
+        </button>
+        <span className="min-w-8 text-center text-lg font-extrabold text-[#101d69]">
+          {value}
+        </span>
+        <button
+          type="button"
+          onClick={onIncrease}
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-[#101d69] text-white transition hover:bg-[#0d1650]"
+        >
+          <Plus size={16} weight="bold" />
+        </button>
+      </div>
+    </div>
   )
 }
 

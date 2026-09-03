@@ -276,6 +276,10 @@ export default function Pricing() {
               const price = getPlanPrice(plan, isAnnual, activeAffiliate)
               const showDiscount = price.previous !== price.current
               const cta = plan.code === 'prueba' ? '7 dias de prueba' : 'Solicitar por WhatsApp'
+              const planHref =
+                plan.code === 'prueba'
+                  ? 'https://app.nuvex.pe/register'
+                  : `https://wa.me/51923328058?text=${encodeURIComponent(planMessage(plan, isAnnual, activeAffiliate))}`
 
               return (
                 <motion.div
@@ -360,7 +364,9 @@ export default function Pricing() {
                     </div>
 
                     <a
-                      href="#contacto"
+                      href={planHref}
+                      target={plan.code === 'prueba' ? undefined : '_blank'}
+                      rel={plan.code === 'prueba' ? undefined : 'noopener noreferrer'}
                       className={`mt-auto flex w-full items-center justify-center gap-2 rounded-lg px-3 py-3 text-sm font-extrabold transition-all ${
                         highlighted
                           ? 'bg-[#101d69] text-white shadow-lg hover:bg-[#0d1650] hover:shadow-xl'
@@ -484,7 +490,9 @@ export default function Pricing() {
               </div>
 
               <a
-                href="#contacto"
+                href={`https://wa.me/51923328058?text=${encodeURIComponent(attendanceMessage(attendanceTotal, isAnnual, activeAffiliate))}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-8 block w-full rounded-lg bg-[#fd741a] px-4 py-3 text-center font-bold text-white shadow-lg transition hover:bg-[#e86512]"
               >
                 Solicitar asistencias
@@ -630,6 +638,40 @@ function planDescription(plan: PlanDefinition) {
   }
 
   return descriptions[plan.code]
+}
+
+function planMessage(
+  plan: PlanDefinition,
+  isAnnual: boolean,
+  affiliate: Extract<AffiliateCodeResponse, { valid: true }> | null,
+) {
+  const base = `Hola, deseo contratar el plan ${plan.name}${isAnnual ? ' anual' : ' mensual'} (S/. ${formatMoney(
+    Number(isAnnual ? plan.annualPrice : plan.monthlyOfferPrice),
+  )}).`
+  const affiliateText = affiliate
+    ? ` Estoy usando el codigo de afiliado ${affiliate.code} con ${
+        affiliate.discountPercent
+      }% de descuento.`
+    : ''
+  return `${base}
+${affiliateText}¿Podrian ayudarme a activarlo?`
+}
+
+function attendanceMessage(
+  total: number,
+  isAnnual: boolean,
+  affiliate: Extract<AffiliateCodeResponse, { valid: true }> | null,
+) {
+  const base = `Hola, deseo contratar el modulo de Asistencias${isAnnual ? ' anual' : ''} por S/. ${formatMoney(
+    total,
+  )}.`
+  const affiliateText = affiliate
+    ? ` Estoy usando el codigo de afiliado ${affiliate.code} con ${
+        affiliate.discountPercent
+      }% de descuento.`
+    : ''
+  return `${base}
+${affiliateText}¿Podrian ayudarme a activarlo?`
 }
 
 function getPlanPrice(

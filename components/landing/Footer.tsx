@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import {
   WhatsappLogo,
   InstagramLogo,
-  FacebookLogo,
+  TiktokLogo,
 } from 'phosphor-react'
 
 export default function Footer() {
@@ -78,25 +78,31 @@ export default function Footer() {
             </p>
             <div className="flex gap-4">
               <a
-                href="#"
-                className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all"
-                title="WhatsApp"
-              >
-                <WhatsappLogo size={20} weight="bold" />
-              </a>
-              <a
-                href="#"
+                href="https://www.instagram.com/nuvexpe/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all"
                 title="Instagram"
               >
                 <InstagramLogo size={20} weight="bold" />
               </a>
               <a
-                href="#"
+                href="https://www.tiktok.com/@nuvexpe"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all"
-                title="Facebook"
+                title="TikTok"
               >
-                <FacebookLogo size={20} weight="bold" />
+                <TiktokLogo size={20} weight="bold" />
+              </a>
+              <a
+                href="https://wa.me/51923328058"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all"
+                title="WhatsApp"
+              >
+                <WhatsappLogo size={20} weight="bold" />
               </a>
             </div>
           </motion.div>

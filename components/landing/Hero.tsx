@@ -25,9 +25,9 @@ export default function Hero() {
     {
       type: 'assistance',
       eyebrow: 'Control de asistencias',
-      titleStart: 'Registra asistencia con QR, huella o carnet',
+      titleStart: 'Registra asistencia con QR',
       titleEnd: 'sin hojas ni filas',
-      text: 'Marca entradas y salidas en segundos, valida al trabajador y mantén cada registro ordenado para tu equipo desde la misma experiencia de Norbitex.',
+      text: 'El trabajador entra a su plataforma, escanea el QR autorizado y marca su entrada o salida con validacion por ubicacion y dispositivo registrado.',
       images: ['/asistencia 1.png', '/asistencia 2.png'],
       alt: 'Control de asistencias en acción',
     },
@@ -98,7 +98,7 @@ export default function Hero() {
   return (
     <section className="relative bg-white pt-8 md:pt-10 pb-4 md:pb-6 overflow-hidden">
       <div className="max-w-7xl mx-auto px-12 sm:px-16 lg:px-24">
-        <div className="relative">
+        <div className="relative h-[820px] sm:h-[760px] lg:h-[540px]">
           <button
             type="button"
             onClick={showPreviousHero}
@@ -121,7 +121,7 @@ export default function Hero() {
             <motion.div
               key={heroIndex}
               custom={slideDirection}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
+              className="absolute inset-0 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
               variants={containerVariants}
               initial={{ opacity: 0, x: slideDirection * 60 }}
               animate={{ opacity: 1, x: 0 }}
@@ -188,9 +188,9 @@ export default function Hero() {
                 Empezar gratis 7 días
                 <ArrowRight size={18} weight="bold" />
               </a>
-              <button className="w-full sm:w-auto px-8 py-4 text-[#101d69] font-semibold rounded-full border-2 border-[#101d69] hover:bg-[#101d69] hover:text-white transition-all flex items-center justify-center gap-2">
-                Ver planes
-              </button>
+              <a href="#planes" className="w-full sm:w-auto px-8 py-4 text-[#101d69] font-semibold rounded-full border-2 border-[#101d69] hover:bg-[#101d69] hover:text-white transition-all flex items-center justify-center gap-2">
+                {activeHero.type === 'assistance' ? 'Ver asistencias' : 'Ver planes'}
+              </a>
             </motion.div>
 
             {/* Trust indicators - Reference Style */}
@@ -218,14 +218,9 @@ export default function Hero() {
 
           {/* Image */}
           <motion.div
-            className="order-first lg:order-last lg:col-span-5 relative w-full flex justify-center lg:justify-start items-center mt-8 lg:mt-0"
+            className="order-first lg:order-last lg:col-span-5 relative h-72 sm:h-80 lg:h-[430px] w-full flex justify-center lg:justify-start items-center mt-8 lg:mt-0"
             variants={itemVariants}
           >
-            <img
-              src={activeImage}
-              alt={activeHero.alt}
-              className={`invisible ${imageSizeClass} max-w-none h-auto object-contain`}
-            />
             <AnimatePresence mode="wait">
               <motion.img
                 key={activeImage}

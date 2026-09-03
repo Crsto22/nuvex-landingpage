@@ -3,6 +3,7 @@ import Hero from '@/components/landing/Hero'
 import LaunchBanner from '@/components/landing/LaunchBanner'
 import SunatCompliance from '@/components/landing/SunatCompliance'
 import HowItWorks from '@/components/landing/HowItWorks'
+import AttendanceHowItWorks from '@/components/landing/AttendanceHowItWorks'
 import Pricing from '@/components/landing/Pricing'
 import CTASection from '@/components/landing/CTASection'
 import FAQ from '@/components/landing/FAQ'
@@ -17,6 +18,7 @@ export default function Home() {
       <LaunchBanner />
       <SunatCompliance />
       <HowItWorks />
+      <AttendanceHowItWorks />
       <Pricing />
       <CTASection />
       <FAQ />

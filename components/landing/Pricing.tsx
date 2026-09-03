@@ -419,10 +419,12 @@ export default function Pricing() {
 
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {[
-                  'Marcacion por QR',
+                  'Marcacion solo por QR',
+                  'QR dinamico de 20 segundos o QR normal',
+                  'Limite de metros por punto QR',
+                  'Bloqueo por cambio de dispositivo',
                   'Historial de entradas y salidas',
                   'Reportes de asistencia',
-                  'Gestion de trabajadores',
                 ].map((feature) => (
                   <div key={feature} className="flex items-start gap-3">
                     <div className="flex-shrink-0 pt-1">

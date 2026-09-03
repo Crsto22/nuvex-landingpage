@@ -8,7 +8,7 @@ const faqs = [
   {
     question: '¿Los 7 días gratis son reales?',
     answer:
-      'Totalmente. Te damos 7 días de acceso completo a todas las funcionalidades de Nubec sin costo, sin tarjeta de crédito y sin compromiso. Queremos que pruebes todo antes de decidir.',
+      'Totalmente. Te damos 7 días de acceso completo a todas las funcionalidades de Nuvex sin costo, sin tarjeta de crédito y sin compromiso. Queremos que pruebes todo antes de decidir.',
   },
   {
     question: '¿Cuánto cuesta después de los 7 días?',
@@ -18,7 +18,7 @@ const faqs = [
   {
     question: '¿Necesito saber de contabilidad para usarlo?',
     answer:
-      'No. Nubec está diseñado para que cualquier persona pueda usarlo sin conocimientos contables. La plataforma automatiza los procesos y te guía paso a paso. Además, nuestro equipo de soporte está siempre disponible.',
+      'No. Nuvex está diseñado para que cualquier persona pueda usarlo sin conocimientos contables. La plataforma automatiza los procesos y te guía paso a paso. Además, nuestro equipo de soporte está siempre disponible.',
   },
   {
     question: '¿La declaración a SUNAT está incluida?',
@@ -26,9 +26,9 @@ const faqs = [
       'Sí. Desde el plan Emprende, preparamos tu declaración mensual y un contador colegiado la revisa antes del envío. Tú solo enfócate en vender, nosotros nos encargamos del resto.',
   },
   {
-    question: '¿Novix es para mi tipo de negocio?',
+    question: '¿Nuvex es para mi tipo de negocio?',
     answer:
-      'Nubec está diseñado especialmente para tiendas de ropa, calzado y boutiques que manejan productos con variantes como talla, color y modelo. Si vendes productos con estas características, Nubec es para ti.',
+      'Nuvex está diseñado especialmente para tiendas de ropa, calzado y boutiques que manejan productos con variantes como talla, color y modelo. Si vendes productos con estas características, Nuvex es para ti.',
   },
   {
     question: '¿Qué pasa si supero los comprobantes de mi plan?',

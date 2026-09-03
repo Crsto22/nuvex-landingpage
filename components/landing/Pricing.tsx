@@ -617,7 +617,7 @@ function featureItems(plan: PlanDefinition) {
 
 function planDescription(plan: PlanDefinition) {
   const descriptions: Record<PlanCode, string> = {
-    prueba: `${plan.trialDays ?? 7} dias para probar Norbitex`,
+    prueba: `${plan.trialDays ?? 7} dias para probar Nuvex`,
     basico: 'Para vender y controlar lo esencial',
     emprendedor: 'Para tiendas que empiezan a crecer',
     crecimiento: 'La opcion mas completa para operar',

@@ -14,7 +14,7 @@ export default function ShowcaseTabs() {
       title: 'Punto de Venta Ultra Rapido',
       description:
         'Atiende a tus clientes en segundos con una venta limpia, directa y lista para caja.',
-      animation: 'norbitex-mascot--wave',
+      animation: 'nuvex-mascot--wave',
       eyebrow: 'Venta en accion',
       stat: 'Cobro rapido',
     },
@@ -24,7 +24,7 @@ export default function ShowcaseTabs() {
       title: 'Control de Inventario Real',
       description:
         'Encuentra tallas, colores y existencias al instante sin moverte de tu mostrador.',
-      animation: 'norbitex-mascot--idle',
+      animation: 'nuvex-mascot--idle',
       eyebrow: 'Stock ordenado',
       stat: 'Variantes claras',
     },
@@ -34,7 +34,7 @@ export default function ShowcaseTabs() {
       title: 'Cierres de Caja Perfectos',
       description:
         'Cuadra caja con movimientos visibles, reportes claros y menos trabajo manual.',
-      animation: 'norbitex-mascot--celebrate',
+      animation: 'nuvex-mascot--celebrate',
       eyebrow: 'Cierre listo',
       stat: 'Reportes al dia',
     },
@@ -62,13 +62,13 @@ export default function ShowcaseTabs() {
             transition={{ duration: 0.6 }}
           >
             <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#fd741a] md:text-base">
-              La experiencia Norbitex
+              La experiencia Nuvex
             </p>
             <h2 className="mb-6 text-3xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
               Disenado para fluir con tu dia
             </h2>
             <p className="mb-8 max-w-xl text-base leading-relaxed text-blue-100 md:text-lg">
-              Cambia de modulo y mira como Norbitex acompana cada momento de tu tienda:
+              Cambia de modulo y mira como Nuvex acompana cada momento de tu tienda:
               venta, inventario y cierre.
             </p>
           </motion.div>
@@ -177,7 +177,7 @@ export default function ShowcaseTabs() {
                   exit={{ opacity: 0, y: -18, scale: 0.96 }}
                   transition={{ duration: 0.35, ease: 'easeOut' }}
                 >
-                  <div className={`norbitex-mascot norbitex-mascot--showcase ${active.animation}`} />
+                  <div className={`nuvex-mascot nuvex-mascot--showcase ${active.animation}`} />
                 </motion.div>
               </AnimatePresence>
 

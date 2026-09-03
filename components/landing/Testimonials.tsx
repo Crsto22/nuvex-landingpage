@@ -20,7 +20,7 @@ export default function Testimonials() {
       initials: 'MP',
       color: 'bg-green-100 text-green-700',
       content:
-        'Norbitex nos ha facilitado muchísimo el control de inventario por tallas. Es rápido y muy fácil de usar.',
+        'Nuvex nos ha facilitado muchísimo el control de inventario por tallas. Es rápido y muy fácil de usar.',
       rating: 5,
     },
     {

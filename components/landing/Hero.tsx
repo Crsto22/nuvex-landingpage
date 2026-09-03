@@ -184,7 +184,7 @@ export default function Hero() {
             </motion.p>
 
             <motion.div className="flex flex-col sm:flex-row gap-4 w-full pt-2" variants={itemVariants}>
-              <a href="https://nobitex-mu.vercel.app/register" className="w-full sm:w-auto px-8 py-4 bg-[#101d69] text-white font-semibold rounded-full hover:bg-[#0d1650] transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl active:bg-[#0d1650]">
+              <a href="https://app.nuvex.pe/register" className="w-full sm:w-auto px-8 py-4 bg-[#101d69] text-white font-semibold rounded-full hover:bg-[#0d1650] transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl active:bg-[#0d1650]">
                 Empezar gratis 7 días
                 <ArrowRight size={18} weight="bold" />
               </a>

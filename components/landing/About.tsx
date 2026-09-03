@@ -40,7 +40,7 @@ export default function About() {
               Sobre nosotros
             </p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#101d69] leading-tight mb-6">
-              Somos Norbitex
+              Somos Nuvex
             </h2>
 
             <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-6">
@@ -52,7 +52,7 @@ export default function About() {
             <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-8">
               Decidimos crear una solución diferente: un POS diseñado específicamente
               para tiendas de ropa, fácil de usar, confiable y transparente en precio.
-              Hoy, cientos de boutiques y negocios textiles confían en Norbitex para
+              Hoy, cientos de boutiques y negocios textiles confían en Nuvex para
               controlar su operación.
             </p>
 
@@ -107,7 +107,7 @@ export default function About() {
               {/* Mascota */}
               <img
                 src="/tu-mascota-entera2.png"
-                alt="Mascota Norbitex"
+                alt="Mascota Nuvex"
                 className="absolute inset-0 w-full h-full object-contain drop-shadow-2xl pointer-events-none scale-[1.15]"
               />
             </div>

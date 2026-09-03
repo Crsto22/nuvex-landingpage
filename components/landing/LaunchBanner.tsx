@@ -42,7 +42,7 @@ export default function LaunchBanner() {
             <div className="absolute -bottom-8 lg:-bottom-20 left-0 w-full lg:w-full h-[120%] lg:h-[130%] flex justify-start items-end pointer-events-none">
               <img
                 src="/mascota-espacio.png"
-                alt="Mascota Norbitex en el espacio"
+                alt="Mascota Nuvex en el espacio"
                 className="w-full h-full object-contain object-bottom drop-shadow-[0_20px_40px_rgba(253,116,26,0.3)] rotate-[3deg]"
               />
             </div>
@@ -54,7 +54,7 @@ export default function LaunchBanner() {
               Impulsamos tu tienda hacia las estrellas
             </h3>
             <p className="text-blue-100/90 text-base lg:text-lg max-w-xl leading-relaxed">
-              Norbitex te da el control absoluto. Administra, vende y escala tu negocio a velocidades que nunca imaginaste. ¡Abróchate el cinturón!
+              Nuvex te da el control absoluto. Administra, vende y escala tu negocio a velocidades que nunca imaginaste. ¡Abróchate el cinturón!
             </p>
           </div>
         </div>

@@ -96,7 +96,7 @@ export default function Benefits() {
             Beneficios principales
           </p>
           <h2 className="text-3xl font-bold leading-tight text-[#101d69] md:text-4xl lg:text-5xl">
-            Lo que Norbitex ofrece a tu tienda
+            Lo que Nuvex ofrece a tu tienda
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-gray-600 md:text-lg">
             Un sistema simple para vender, controlar inventario y mantener tu

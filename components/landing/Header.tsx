@@ -35,7 +35,7 @@ export default function Header() {
           <div className="flex justify-between items-center h-16 lg:h-20">
             {/* Logo */}
             <Link href="/" className="flex-shrink-0 flex items-center gap-3">
-              <img src="/logopng.png" alt="Norbitex Logo" className="h-12 lg:h-14 w-auto" />
+              <img src="/logopng.png" alt="Nuvex Logo" className="h-12 lg:h-14 w-auto" />
             </Link>
 
             {/* Desktop Menu */}
@@ -54,14 +54,14 @@ export default function Header() {
             {/* Desktop Buttons */}
             <div className="hidden lg:flex items-center gap-2 xl:gap-3">
               <a
-                href="https://nobitex-mu.vercel.app/login"
+                href="https://app.nuvex.pe"
                 className="px-3 xl:px-4 py-2 text-sm font-semibold text-[#101d69] bg-transparent border border-[#101d69] rounded-full hover:bg-[#101d69] hover:text-white transition-all whitespace-nowrap flex items-center gap-1.5"
               >
                 <SignIn size={16} weight="bold" />
                 Ingresar
               </a>
               <a
-                href="https://nobitex-mu.vercel.app/register"
+                href="https://app.nuvex.pe/register"
                 className="px-3 xl:px-4 py-2 text-sm font-semibold text-white bg-[#101d69] rounded-full hover:bg-[#0d1650] transition-all whitespace-nowrap"
               >
                 Registrarme
@@ -103,14 +103,14 @@ export default function Header() {
             </nav>
             <div className="flex flex-col gap-3 pt-4 border-t border-gray-100 mt-2">
               <a
-                href="https://nobitex-mu.vercel.app/login"
+                href="https://app.nuvex.pe"
                 className="w-full px-4 py-3 text-base font-semibold text-[#101d69] bg-transparent border border-[#101d69] rounded-full text-center active:bg-gray-50 flex items-center justify-center gap-2"
               >
                 <SignIn size={18} weight="bold" />
                 Ingresar
               </a>
               <a
-                href="https://nobitex-mu.vercel.app/register"
+                href="https://app.nuvex.pe/register"
                 className="w-full px-4 py-3 text-base font-semibold text-white bg-[#101d69] rounded-full text-center active:bg-[#0d1650]"
               >
                 Registrarme

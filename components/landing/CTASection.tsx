@@ -45,7 +45,7 @@ export default function CTASection() {
           </p>
 
           <motion.a
-            href="https://nobitex-mu.vercel.app/register"
+            href="https://app.nuvex.pe/register"
             className="mt-8 px-10 py-4 bg-[#fd741a] text-white font-bold text-lg rounded-full hover:bg-[#e5650f] transition-all shadow-xl hover:shadow-2xl flex items-center gap-2 mx-auto w-fit"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

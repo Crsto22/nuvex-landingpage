@@ -36,7 +36,7 @@ const jetbrainsMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Norbitex - POS en la Nube para Tu Negocio',
+  title: 'Nuvex - POS en la Nube para Tu Negocio',
   description: 'Vende rápido, cuadra tu caja y controla el inventario de tus productos con variantes (talla, color, modelo). El SaaS de punto de venta para negocios con productos por variantes.',
   generator: 'v0.app',
   icons: {

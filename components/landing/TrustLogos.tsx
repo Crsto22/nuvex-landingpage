@@ -16,7 +16,7 @@ export default function TrustLogos() {
           {/* Texto normal */}
           <div className="flex-shrink-0 text-center lg:text-left">
             <p className="text-base md:text-lg text-gray-600 leading-relaxed">
-              Clientes que ya confían en Norbitex
+              Clientes que ya confían en Nuvex
             </p>
           </div>
 

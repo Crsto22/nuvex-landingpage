@@ -6,7 +6,7 @@ export default function FloatingButtons() {
   return (
     <>
       <motion.a
-        href="https://wa.me/51999999999"
+        href="https://wa.me/51923328058"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 flex items-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all"

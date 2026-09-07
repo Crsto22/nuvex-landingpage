@@ -36,7 +36,7 @@ const attendanceFlowItems = [
 
 export default function AttendanceHowItWorks() {
   return (
-    <section className="bg-gray-50 py-16 md:py-24">
+    <section id="asistencias" className="bg-gray-50 py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           className="mx-auto mb-12 max-w-3xl text-center md:mb-16"

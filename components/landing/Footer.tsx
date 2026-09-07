@@ -15,6 +15,7 @@ export default function Footer() {
       title: 'Producto',
       links: [
         { label: 'Planes', href: '#planes' },
+        { label: 'Sistemas a medida', href: '#sistemas' },
       ],
     },
     {

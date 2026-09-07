@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Receipt, Storefront, FileText, ArrowRight } from 'phosphor-react'
+import { Receipt, Storefront, Buildings, ArrowRight } from 'phosphor-react'
 
 const features = [
   {
@@ -15,9 +15,9 @@ const features = [
     desc: 'Vende rapido y controla tu stock en tiempo real, conectado a tus ventas.',
   },
   {
-    icon: FileText,
-    title: 'Declaracion SUNAT incluida',
-    desc: 'Desde el plan Emprende, preparamos tu declaracion mensual y un contador la valida.',
+    icon: Buildings,
+    title: 'Multiples sucursales y cajas',
+    desc: 'Gestiona todas tus tiendas desde un solo lugar: stock, ventas y usuarios por sucursal.',
   },
 ]
 

@@ -7,6 +7,7 @@ import AttendanceHowItWorks from '@/components/landing/AttendanceHowItWorks'
 import Pricing from '@/components/landing/Pricing'
 import CTASection from '@/components/landing/CTASection'
 import FAQ from '@/components/landing/FAQ'
+import CustomSystems from '@/components/landing/CustomSystems'
 import Footer from '@/components/landing/Footer'
 import FloatingButtons from '@/components/landing/FloatingButtons'
 
@@ -21,6 +22,7 @@ export default function Home() {
       <AttendanceHowItWorks />
       <Pricing />
       <CTASection />
+      <CustomSystems />
       <FAQ />
       <Footer />
       <FloatingButtons />

@@ -1,13 +1,16 @@
 'use client'
 
-import { FormEvent, useEffect, useMemo, useState } from 'react'
+import { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   Barcode,
   Buildings,
+  CaretLeft,
+  CaretRight,
   Check,
   CheckCircle,
   Database,
+  MagnifyingGlass,
   Minus,
   Package,
   Plus,
@@ -38,6 +41,7 @@ export default function Pricing() {
   const [affiliateCode, setAffiliateCode] = useState('')
   const [affiliate, setAffiliate] = useState<AffiliateCodeResponse | null>(null)
   const [validatingAffiliate, setValidatingAffiliate] = useState(false)
+  const [posSlide, setPosSlide] = useState(0)
 
   useEffect(() => {
     let active = true
@@ -66,6 +70,35 @@ export default function Pricing() {
   }, [])
 
   const highlightedCode = useMemo(() => getHighlightedCode(plans), [plans])
+  const posPlans = useMemo(() => plans.filter((plan) => plan.code !== 'prueba'), [plans])
+  const posCarouselRef = useRef<HTMLDivElement>(null)
+
+  function handlePosScroll() {
+    const el = posCarouselRef.current
+    if (!el) return
+    let closest = 0
+    let minDistance = Infinity
+    Array.from(el.children).forEach((child, index) => {
+      const element = child as HTMLElement
+      const distance = Math.abs(element.offsetLeft - el.scrollLeft)
+      if (distance < minDistance) {
+        minDistance = distance
+        closest = index
+      }
+    })
+    setPosSlide(closest)
+  }
+
+  function scrollToPosSlide(index: number) {
+    const el = posCarouselRef.current
+    if (!el) return
+    const target = Math.max(0, Math.min(posPlans.length - 1, index))
+    const child = el.children[target] as HTMLElement | undefined
+    if (child) {
+      el.scrollTo({ left: child.offsetLeft, behavior: 'smooth' })
+    }
+    setPosSlide(target)
+  }
   const activeAffiliate = affiliate?.valid ? affiliate : null
   const attendanceMonthlyTotal = attendancePricing
     ? roundMoney(
@@ -118,11 +151,6 @@ export default function Pricing() {
     }
   }
 
-  function clearAffiliateCode() {
-    setAffiliateCode('')
-    setAffiliate(null)
-  }
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -143,8 +171,18 @@ export default function Pricing() {
   }
 
   return (
-    <section id="planes" className="bg-gray-50 py-16 md:py-24">
-      <div className="mx-auto w-full px-3 sm:px-4 lg:px-6">
+    <section id="planes" className="relative overflow-hidden bg-white py-16 md:py-24">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 flex items-center"
+      >
+        <img
+          src="/fondos/fondo6.png"
+          alt=""
+          className="w-full object-contain"
+        />
+      </div>
+      <div className="relative z-10 mx-auto w-full px-3 sm:px-4 lg:px-6">
         <motion.div
           className="mb-12 text-center md:mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -152,39 +190,38 @@ export default function Pricing() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#fd741a] md:text-base">
-            Planes transparentes
-          </p>
-          <h2 className="mx-auto max-w-3xl text-3xl font-bold leading-tight text-[#101d69] md:text-4xl lg:text-5xl">
-            Elige el plan perfecto para tu tienda
+          <h2 className="mx-auto max-w-3xl text-2xl font-bold leading-tight text-[#101d69] md:text-3xl lg:text-4xl">
+            Elige el plan perfecto{' '}
+            <span className="text-[#fd741a]">para tu tienda</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
-            Sin sorpresas. Sin contratos a largo plazo. Cancela cuando quieras.
-          </p>
         </motion.div>
 
-        <div className="mb-12 flex flex-col items-center gap-6 md:mb-20">
-          <div className="grid w-full max-w-md grid-cols-2 rounded-xl border border-gray-200 bg-white p-1 shadow-sm">
-            {[
-              ['pos', 'POS'],
-              ['attendance', 'Asistencias'],
-            ].map(([value, label]) => (
+        <div className="mb-12 flex flex-col gap-4 md:mb-20 lg:grid lg:grid-cols-3 lg:items-center">
+          <form
+            onSubmit={applyAffiliateCode}
+            className="w-full lg:col-start-1 lg:max-w-xs lg:justify-self-start"
+          >
+            <div className="flex flex-row gap-0">
+              <input
+                type="text"
+                value={affiliateCode}
+                onChange={(event) => setAffiliateCode(event.target.value)}
+                placeholder="Codigo de afiliado"
+                className="min-h-12 flex-1 rounded-l-full rounded-r-none border border-gray-200 bg-gray-50 px-4 text-sm font-semibold uppercase text-[#101d69] outline-none transition focus:border-[#101d69] focus:ring-2 focus:ring-[#101d69]/15"
+              />
               <button
-                key={value}
-                type="button"
-                onClick={() => setPricingView(value as 'pos' | 'attendance')}
-                className={`rounded-lg px-4 py-3 text-sm font-bold transition-all ${
-                  pricingView === value
-                    ? 'bg-[#101d69] text-white shadow-sm'
-                    : 'text-[#101d69] hover:bg-gray-50'
-                }`}
+                type="submit"
+                aria-label="Buscar codigo de afiliado"
+                disabled={validatingAffiliate || !affiliateCode.trim()}
+                className="flex min-h-12 items-center justify-center rounded-l-none rounded-r-full bg-[#101d69] px-4 text-white transition hover:bg-[#0d1650] disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {label}
+                <MagnifyingGlass size={20} weight="bold" />
               </button>
-            ))}
-          </div>
+            </div>
+            {affiliateMessage(affiliate)}
+          </form>
 
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-4 lg:col-start-2 lg:justify-self-center">
             <span
               className={`text-sm font-semibold md:text-base ${
                 !isAnnual ? 'text-[#101d69]' : 'text-gray-600'
@@ -218,37 +255,25 @@ export default function Pricing() {
             </span>
           </div>
 
-          <form
-            onSubmit={applyAffiliateCode}
-            className="w-full max-w-xl rounded-xl border border-gray-200 bg-white p-3 shadow-sm"
-          >
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <input
-                type="text"
-                value={affiliateCode}
-                onChange={(event) => setAffiliateCode(event.target.value)}
-                placeholder="Codigo de afiliado"
-                className="min-h-12 flex-1 rounded-lg border border-gray-200 bg-gray-50 px-4 text-sm font-semibold uppercase text-[#101d69] outline-none transition focus:border-[#101d69] focus:ring-2 focus:ring-[#101d69]/15"
-              />
+          <div className="grid w-full grid-cols-2 rounded-full bg-gray-100 p-1 lg:col-start-3 lg:w-auto lg:max-w-xs lg:justify-self-end">
+            {[
+              ['pos', 'POS'],
+              ['attendance', 'Asistencias'],
+            ].map(([value, label]) => (
               <button
-                type="submit"
-                disabled={validatingAffiliate || !affiliateCode.trim()}
-                className="min-h-12 rounded-lg bg-[#101d69] px-5 text-sm font-bold text-white transition hover:bg-[#0d1650] disabled:cursor-not-allowed disabled:opacity-60"
+                key={value}
+                type="button"
+                onClick={() => setPricingView(value as 'pos' | 'attendance')}
+                className={`rounded-full px-4 py-3 text-sm font-bold transition-all ${
+                  pricingView === value
+                    ? 'bg-[#101d69] text-white shadow-sm'
+                    : 'text-[#101d69] hover:bg-gray-50'
+                }`}
               >
-                {validatingAffiliate ? 'Validando...' : 'Aplicar'}
+                {label}
               </button>
-              {affiliate && (
-                <button
-                  type="button"
-                  onClick={clearAffiliateCode}
-                  className="min-h-12 rounded-lg border border-gray-200 px-5 text-sm font-bold text-[#101d69] transition hover:bg-gray-50"
-                >
-                  Quitar
-                </button>
-              )}
-            </div>
-            {affiliateMessage(affiliate)}
-          </form>
+            ))}
+          </div>
         </div>
 
         {loadingPlans && (
@@ -264,14 +289,17 @@ export default function Pricing() {
         )}
 
         {!loadingPlans && !plansError && pricingView === 'pos' && (
+          <>
           <motion.div
-            className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-5"
+            ref={posCarouselRef}
+            onScroll={handlePosScroll}
+            className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-2 md:overflow-visible md:pb-0 xl:grid-cols-4"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
           >
-            {plans.map((plan) => {
+            {posPlans.map((plan) => {
               const highlighted = plan.code === highlightedCode
               const price = getPlanPrice(plan, isAnnual, activeAffiliate)
               const showDiscount = price.previous !== price.current
@@ -284,7 +312,7 @@ export default function Pricing() {
               return (
                 <motion.div
                   key={plan.code}
-                  className={`group relative flex flex-col rounded-lg bg-white transition-all duration-300 ${
+                  className={`group relative flex w-full shrink-0 snap-center flex-col rounded-3xl bg-white transition-all duration-300 md:w-auto md:shrink md:snap-align-none ${
                     highlighted
                       ? 'z-10 border-2 border-[#101d69] shadow-2xl xl:scale-[1.02]'
                       : 'z-0 border border-[#dbe3f3] shadow-sm hover:border-[#101d69]'
@@ -306,7 +334,7 @@ export default function Pricing() {
                       {planDescription(plan)}
                     </p>
 
-                    <div className="mb-5 min-h-24">
+                    <div className="mb-4">
                       {showDiscount && (
                         <div className="mb-1 flex flex-wrap items-center gap-2">
                           <span className="text-sm font-medium text-gray-400 line-through">
@@ -378,52 +406,124 @@ export default function Pricing() {
                       {plan.code !== 'prueba' && <WhatsappLogo size={17} weight="bold" />}
                       {cta}
                     </a>
+
+                    <p className="mt-3 text-center text-xs font-semibold text-gray-600">
+                      o{' '}
+                      <a
+                        href="https://app.nuvex.pe/register"
+                        className="font-bold text-[#101d69] underline underline-offset-2 transition-colors hover:text-[#fd741a]"
+                      >
+                        prueba gratis 30 días
+                      </a>
+                    </p>
                   </div>
                 </motion.div>
               )
             })}
           </motion.div>
+
+          <div className="mt-6 flex items-center justify-center gap-4 md:hidden">
+            <button
+              type="button"
+              aria-label="Plan anterior"
+              onClick={() => scrollToPosSlide(posSlide - 1)}
+              disabled={posSlide === 0}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#101d69] text-[#101d69] transition hover:bg-[#101d69] hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <CaretLeft size={18} weight="bold" />
+            </button>
+            <span className="text-sm font-bold text-[#101d69]">
+              {posSlide + 1} / {posPlans.length}
+            </span>
+            <button
+              type="button"
+              aria-label="Plan siguiente"
+              onClick={() => scrollToPosSlide(posSlide + 1)}
+              disabled={posSlide >= posPlans.length - 1}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#101d69] text-[#101d69] transition hover:bg-[#101d69] hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <CaretRight size={18} weight="bold" />
+            </button>
+          </div>
+          </>
         )}
 
         {!loadingPlans && !plansError && pricingView === 'attendance' && attendancePricing && (
           <motion.div
-            className="mx-auto grid max-w-5xl grid-cols-1 overflow-hidden rounded-2xl border border-[#14b8a6]/30 bg-white shadow-xl lg:grid-cols-[1.1fr_0.9fr]"
+            className="mx-auto max-w-5xl"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
           >
-            <motion.div className="p-6 md:p-8" variants={cardVariants}>
-              <div className="mb-6 w-fit rounded-full bg-[#14b8a6]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#0f766e]">
-                Asistencias
-              </div>
-              <h3 className="mb-3 text-3xl font-bold text-[#101d69] md:text-4xl">
-                Calcula tu plan de asistencias
-              </h3>
-              <p className="mb-8 text-base leading-relaxed text-gray-600">
-                Ajusta trabajadores y puntos QR para ver cuanto pagaras por el control de asistencia.
-              </p>
+            <div className="grid gap-16 pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
+              <div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-24 sm:gap-8">
+                  {[
+                    {
+                      name: 'Trabajadores',
+                      image: '/iconos/trabajadores.png',
+                      card: 'bg-[#101d69]',
+                      value: attendanceEmployees,
+                      helper: `S/. ${formatMoney(Number(attendancePricing.employeeUnitPrice))} por trabajador`,
+                      min: 1,
+                      onDecrease: () =>
+                        setAttendanceEmployees((value) => Math.max(1, value - 1)),
+                      onIncrease: () => setAttendanceEmployees((value) => value + 1),
+                    },
+                    {
+                      name: 'Punto QR',
+                      image: '/iconos/puntoqr.png',
+                      card: 'bg-[#14b8a6]',
+                      value: attendanceQrPoints,
+                      helper: `S/. ${formatMoney(Number(attendancePricing.qrPointUnitPrice))} por punto QR`,
+                      min: 1,
+                      onDecrease: () =>
+                        setAttendanceQrPoints((value) => Math.max(1, value - 1)),
+                      onIncrease: () => setAttendanceQrPoints((value) => value + 1),
+                    },
+                  ].map((item) => (
+                    <motion.div key={item.name} variants={cardVariants} className="group relative">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="absolute -top-14 left-1/2 z-10 h-24 w-24 -translate-x-1/2 object-contain drop-shadow-[0_18px_30px_rgba(16,29,105,0.25)] transition-transform duration-300 ease-out group-hover:-translate-y-3 sm:-top-16 sm:h-32 sm:w-32"
+                      />
+                      <div
+                        className={`flex flex-col items-center rounded-[2rem] px-4 pb-8 pt-16 text-center shadow-[0_18px_45px_rgba(16,29,105,0.15)] transition-shadow duration-300 ease-out group-hover:shadow-[0_40px_80px_rgba(16,29,105,0.35)] sm:px-6 sm:pt-20 ${item.card}`}
+                      >
+                        <h4 className="text-base font-bold text-white sm:text-xl md:text-2xl">
+                          {item.name}
+                        </h4>
+                        <p className="mt-1 text-xs text-white/80 sm:text-sm">
+                          {item.helper}
+                        </p>
+                        <div className="mt-4 flex items-center gap-3 rounded-full bg-white/15 p-1">
+                          <button
+                            type="button"
+                            onClick={item.onDecrease}
+                            disabled={item.value <= item.min}
+                            className="flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-[#101d69] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+                          >
+                            <Minus size={16} weight="bold" />
+                          </button>
+                          <span className="min-w-8 text-center text-xl font-extrabold text-white">
+                            {item.value}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={item.onIncrease}
+                            className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#101d69] transition hover:scale-105"
+                          >
+                            <Plus size={16} weight="bold" />
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
 
-              <div className="space-y-4">
-                <QuantityControl
-                  label="Trabajadores"
-                  helper={`S/. ${formatMoney(Number(attendancePricing.employeeUnitPrice))} por trabajador`}
-                  value={attendanceEmployees}
-                  min={1}
-                  onDecrease={() => setAttendanceEmployees((value) => Math.max(1, value - 1))}
-                  onIncrease={() => setAttendanceEmployees((value) => value + 1)}
-                />
-                <QuantityControl
-                  label="Puntos QR"
-                  helper={`S/. ${formatMoney(Number(attendancePricing.qrPointUnitPrice))} por punto QR`}
-                  value={attendanceQrPoints}
-                  min={1}
-                  onDecrease={() => setAttendanceQrPoints((value) => Math.max(1, value - 1))}
-                  onIncrease={() => setAttendanceQrPoints((value) => value + 1)}
-                />
-              </div>
-
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                <div className="mt-20 grid gap-4 sm:grid-cols-2">
                 {[
                   'Marcacion solo por QR',
                   'QR dinamico de 20 segundos o QR normal',
@@ -441,22 +541,22 @@ export default function Pricing() {
                     </p>
                   </div>
                 ))}
+                </div>
               </div>
-            </motion.div>
 
             <motion.div
-              className="flex flex-col justify-between bg-[#101d69] p-6 text-white md:p-8"
+              className="flex flex-col justify-between rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8"
               variants={cardVariants}
             >
               <div>
-                <p className="mb-2 text-sm font-semibold text-white/70">
+                <p className="mb-2 text-sm font-semibold text-[#101d69]/70">
                   Total {isAnnual ? 'anual' : 'mensual'}
                 </p>
                 <div className="mb-2 flex flex-wrap items-end gap-2">
-                  <span className="text-4xl font-extrabold md:text-5xl">
+                  <span className="text-4xl font-extrabold text-[#101d69] md:text-5xl">
                     S/. {formatMoney(attendanceTotal)}
                   </span>
-                  <span className="pb-2 text-sm text-white/70">
+                  <span className="pb-2 text-sm text-[#101d69]/70">
                     {isAnnual ? '/anio' : '/mes'}
                   </span>
                 </div>
@@ -465,25 +565,25 @@ export default function Pricing() {
                     S/. {formatMoney(attendanceTotal / 12)} promedio mensual
                   </p>
                 )}
-                <div className="mt-8 space-y-3 rounded-xl bg-white/10 p-4">
+                <div className="mt-8 space-y-3 rounded-xl bg-gray-50 p-4">
                   <div className="flex justify-between gap-4 text-sm">
-                    <span className="text-white/70">{attendanceEmployees} trabajadores</span>
-                    <span>S/. {formatMoney(Number(attendancePricing.employeeUnitPrice) * attendanceEmployees)}</span>
+                    <span className="text-gray-500">{attendanceEmployees} trabajadores</span>
+                    <span className="font-semibold text-[#101d69]">S/. {formatMoney(Number(attendancePricing.employeeUnitPrice) * attendanceEmployees)}</span>
                   </div>
                   <div className="flex justify-between gap-4 text-sm">
-                    <span className="text-white/70">{attendanceQrPoints} puntos QR</span>
-                    <span>S/. {formatMoney(Number(attendancePricing.qrPointUnitPrice) * attendanceQrPoints)}</span>
+                    <span className="text-gray-500">{attendanceQrPoints} puntos QR</span>
+                    <span className="font-semibold text-[#101d69]">S/. {formatMoney(Number(attendancePricing.qrPointUnitPrice) * attendanceQrPoints)}</span>
                   </div>
                   {isAnnual && Number(attendancePricing.annualDiscountPercent) > 0 && (
-                    <div className="flex justify-between gap-4 border-t border-white/15 pt-3 text-sm">
-                      <span className="text-white/70">Descuento anual</span>
-                      <span>-{attendancePricing.annualDiscountPercent}%</span>
+                    <div className="flex justify-between gap-4 border-t border-gray-200 pt-3 text-sm">
+                      <span className="text-gray-500">Descuento anual</span>
+                      <span className="font-semibold text-[#101d69]">-{attendancePricing.annualDiscountPercent}%</span>
                     </div>
                   )}
                   {attendanceAffiliateDiscountPercent > 0 && (
-                    <div className="flex justify-between gap-4 border-t border-white/15 pt-3 text-sm">
-                      <span className="text-white/70">Descuento afiliado</span>
-                      <span>-S/. {formatMoney(attendanceAffiliateDiscountAmount)}</span>
+                    <div className="flex justify-between gap-4 border-t border-gray-200 pt-3 text-sm">
+                      <span className="text-gray-500">Descuento afiliado</span>
+                      <span className="font-semibold text-[#101d69]">-S/. {formatMoney(attendanceAffiliateDiscountAmount)}</span>
                     </div>
                   )}
                 </div>
@@ -493,11 +593,13 @@ export default function Pricing() {
                 href={`https://wa.me/51923328058?text=${encodeURIComponent(attendanceMessage(attendanceTotal, isAnnual, activeAffiliate))}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 block w-full rounded-lg bg-[#fd741a] px-4 py-3 text-center font-bold text-white shadow-lg transition hover:bg-[#e86512]"
+                className="mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-[#22c55e] px-4 py-3 text-center font-bold text-white shadow-sm transition hover:bg-[#16a34a]"
               >
-                Solicitar asistencias
+                <WhatsappLogo size={17} weight="bold" />
+                Solicitar por WhatsApp
               </a>
             </motion.div>
+            </div>
           </motion.div>
         )}
 
@@ -752,51 +854,6 @@ function PlanFeature({ label, included }: { label: string; included: boolean }) 
         className={included ? 'shrink-0 text-emerald-500' : 'shrink-0 text-gray-300'}
       />
       <span>{label}</span>
-    </div>
-  )
-}
-
-function QuantityControl({
-  label,
-  helper,
-  value,
-  min,
-  onDecrease,
-  onIncrease,
-}: {
-  label: string
-  helper: string
-  value: number
-  min: number
-  onDecrease: () => void
-  onIncrease: () => void
-}) {
-  return (
-    <div className="flex items-center justify-between gap-4 rounded-xl border border-gray-200 bg-gray-50 p-4">
-      <div>
-        <p className="font-bold text-[#101d69]">{label}</p>
-        <p className="text-sm text-gray-500">{helper}</p>
-      </div>
-      <div className="flex items-center gap-3 rounded-full bg-white p-1 shadow-sm">
-        <button
-          type="button"
-          onClick={onDecrease}
-          disabled={value <= min}
-          className="flex h-9 w-9 items-center justify-center rounded-full text-[#101d69] transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          <Minus size={16} weight="bold" />
-        </button>
-        <span className="min-w-8 text-center text-lg font-extrabold text-[#101d69]">
-          {value}
-        </span>
-        <button
-          type="button"
-          onClick={onIncrease}
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-[#101d69] text-white transition hover:bg-[#0d1650]"
-        >
-          <Plus size={16} weight="bold" />
-        </button>
-      </div>
     </div>
   )
 }

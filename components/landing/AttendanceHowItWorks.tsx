@@ -4,33 +4,29 @@ import { motion } from 'framer-motion'
 
 const attendanceFlowItems = [
   {
-    image: '/iconos/marcaciones%20(1).png',
+    image: '/iconos/marcaciones%20(4).png',
     title: 'Marcacion por QR',
-    highlight: 'Punto autorizado',
     text: 'El trabajador entra a su plataforma y escanea el QR asignado al punto de asistencia.',
     card: 'bg-[#fef3c7]',
     circle: 'bg-[#fbbf24]',
   },
   {
-    image: '/iconos/marcaciones%20(2).png',
+    image: '/iconos/marcaciones%20(1).png',
     title: 'QR dinamico o normal',
-    highlight: 'Cada 20 segundos',
     text: 'Puedes usar QR dinamico que cambia cada 20 segundos o QR normal para un punto fijo.',
     card: 'bg-[#cffafe]',
     circle: 'bg-[#22d3ee]',
   },
   {
-    image: '/iconos/marcaciones%20(3).png',
+    image: '/iconos/marcaciones%20(2).png',
     title: 'Validacion por metros',
-    highlight: 'Rango permitido',
     text: 'Cada punto QR puede exigir que el trabajador este dentro del rango permitido.',
     card: 'bg-[#f3e8ff]',
     circle: 'bg-[#c084fc]',
   },
   {
-    image: '/iconos/marcaciones%20(4).png',
+    image: '/iconos/marcaciones%20(3).png',
     title: 'Dispositivo registrado',
-    highlight: 'Un equipo por trabajador',
     text: 'Al ingresar se registra su dispositivo; si intenta marcar desde otro, queda bloqueado.',
     card: 'bg-[#dcfce7]',
     circle: 'bg-[#4ade80]',
@@ -67,7 +63,7 @@ export default function AttendanceHowItWorks() {
             visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
           }}
         >
-          {attendanceFlowItems.map((item, index) => {
+          {attendanceFlowItems.map((item) => {
             return (
               <motion.div
                 key={item.title}
@@ -85,13 +81,6 @@ export default function AttendanceHowItWorks() {
                     className="relative z-10 h-40 w-40 object-contain"
                   />
                 </div>
-
-                <p className="mb-3 inline-flex items-center gap-2 text-sm font-bold text-[#101d69]">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#101d69]/10 text-xs">
-                    {index + 1}
-                  </span>
-                  {item.highlight}
-                </p>
 
                 <h3 className="text-xl font-bold leading-snug text-[#101d69]">
                   {item.title}

@@ -6,7 +6,7 @@ import { CalendarBlank } from 'phosphor-react'
 import Header from '@/components/landing/Header'
 import Footer from '@/components/landing/Footer'
 import FloatingButtons from '@/components/landing/FloatingButtons'
-import { API_BASE_URL } from '@/lib/api'
+import { CPE_API_BASE_URL } from '@/lib/api'
 
 type ConsultaCpeResponse = {
   rucEmisor: string
@@ -36,7 +36,7 @@ const tiposComprobante = [
 function downloadUrl(url: string | null) {
   if (!url) return '#'
   if (/^https?:\/\//i.test(url)) return url
-  return `${API_BASE_URL}${url.startsWith('/') ? url : `/${url}`}`
+  return `${CPE_API_BASE_URL}${url.startsWith('/') ? url : `/${url}`}`
 }
 
 export default function ConsultaCPE() {
@@ -59,7 +59,7 @@ export default function ConsultaCPE() {
     setResultado(null)
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/public/cpe/consulta`, {
+      const response = await fetch(`${CPE_API_BASE_URL}/api/public/cpe/consulta`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

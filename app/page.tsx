@@ -22,8 +22,16 @@ export default function Home() {
       <FeaturedFeatures />
       <AttendanceHowItWorks />
       <Pricing />
-      <CustomSystems />
-      <FAQ />
+      <div className="relative">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 left-0 z-0"
+        >
+          <img src="/fondos/fondo%205.png" alt="" className="h-full w-auto" />
+        </div>
+        <CustomSystems />
+        <FAQ />
+      </div>
       <Footer />
       <FloatingButtons />
     </main>

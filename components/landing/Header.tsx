@@ -2,8 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { List, X, WhatsappLogo, Question, SignIn } from 'phosphor-react'
-import { motion } from 'framer-motion'
+import { List, SignIn } from 'phosphor-react'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -71,55 +77,56 @@ export default function Header() {
             </div>
 
             {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 text-[#101d69]"
-            >
-              {isOpen ? (
-                <X size={24} weight="bold" />
-              ) : (
-                <List size={24} weight="bold" />
-              )}
-            </button>
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <button
+                  className="lg:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white text-[#101d69] shadow-md border border-gray-100"
+                  aria-label="Abrir menú"
+                >
+                  <List size={24} weight="bold" />
+                </button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[80%] bg-white p-0 sm:max-w-xs">
+                <SheetHeader className="border-b border-gray-100 p-5">
+                  <SheetTitle asChild>
+                    <Link href="/" onClick={() => setIsOpen(false)}>
+                      <img src="/logopng.png" alt="Nuvex Logo" className="h-10 w-auto" />
+                    </Link>
+                  </SheetTitle>
+                </SheetHeader>
+
+                <nav className="flex flex-col gap-1 px-3 py-4">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="block text-base font-medium text-gray-700 hover:text-[#101d69] py-3 px-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </nav>
+
+                <div className="mt-auto flex flex-col gap-3 border-t border-gray-100 p-5">
+                  <a
+                    href="https://app.nuvex.pe"
+                    className="w-full px-4 py-3 text-base font-semibold text-[#101d69] bg-transparent border border-[#101d69] rounded-full text-center active:bg-gray-50 flex items-center justify-center gap-2"
+                  >
+                    <SignIn size={18} weight="bold" />
+                    Ingresar
+                  </a>
+                  <a
+                    href="https://app.nuvex.pe/register"
+                    className="w-full px-4 py-3 text-base font-semibold text-white bg-[#101d69] rounded-full text-center active:bg-[#0d1650]"
+                  >
+                    Registrarme
+                  </a>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="lg:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 py-4 px-4 shadow-xl"
-          >
-            <nav className="flex flex-col gap-3 mb-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="block text-base font-medium text-gray-700 hover:text-[#101d69] py-3 px-2 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-            <div className="flex flex-col gap-3 pt-4 border-t border-gray-100 mt-2">
-              <a
-                href="https://app.nuvex.pe"
-                className="w-full px-4 py-3 text-base font-semibold text-[#101d69] bg-transparent border border-[#101d69] rounded-full text-center active:bg-gray-50 flex items-center justify-center gap-2"
-              >
-                <SignIn size={18} weight="bold" />
-                Ingresar
-              </a>
-              <a
-                href="https://app.nuvex.pe/register"
-                className="w-full px-4 py-3 text-base font-semibold text-white bg-[#101d69] rounded-full text-center active:bg-[#0d1650]"
-              >
-                Registrarme
-              </a>
-            </div>
-          </motion.div>
-        )}
       </header>
 
       {/* Offset for fixed header */}

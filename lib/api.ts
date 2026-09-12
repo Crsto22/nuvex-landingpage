@@ -1,6 +1,9 @@
 export const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ?? 'http://localhost:3000'
 
+export const CPE_API_BASE_URL =
+  process.env.NEXT_PUBLIC_CPE_API_URL?.replace(/\/$/, '') || API_BASE_URL
+
 export type PlanCode =
   | 'prueba'
   | 'basico'

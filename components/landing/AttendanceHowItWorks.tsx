@@ -1,106 +1,104 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Clock, DeviceMobile, MapPin, QrCode } from 'phosphor-react'
 
 const attendanceFlowItems = [
   {
-    icon: QrCode,
+    image: '/iconos/marcaciones%20(1).png',
     title: 'Marcacion por QR',
     highlight: 'Punto autorizado',
-    metric: 'QR seguro',
     text: 'El trabajador entra a su plataforma y escanea el QR asignado al punto de asistencia.',
+    card: 'bg-[#fef3c7]',
+    circle: 'bg-[#fbbf24]',
   },
   {
-    icon: Clock,
+    image: '/iconos/marcaciones%20(2).png',
     title: 'QR dinamico o normal',
     highlight: 'Cada 20 segundos',
-    metric: 'Flexible',
     text: 'Puedes usar QR dinamico que cambia cada 20 segundos o QR normal para un punto fijo.',
+    card: 'bg-[#cffafe]',
+    circle: 'bg-[#22d3ee]',
   },
   {
-    icon: MapPin,
+    image: '/iconos/marcaciones%20(3).png',
     title: 'Validacion por metros',
     highlight: 'Rango permitido',
-    metric: 'Ubicacion',
     text: 'Cada punto QR puede exigir que el trabajador este dentro del rango permitido.',
+    card: 'bg-[#f3e8ff]',
+    circle: 'bg-[#c084fc]',
   },
   {
-    icon: DeviceMobile,
+    image: '/iconos/marcaciones%20(4).png',
     title: 'Dispositivo registrado',
     highlight: 'Un equipo por trabajador',
-    metric: 'Bloqueo',
     text: 'Al ingresar se registra su dispositivo; si intenta marcar desde otro, queda bloqueado.',
+    card: 'bg-[#dcfce7]',
+    circle: 'bg-[#4ade80]',
   },
 ] as const
 
 export default function AttendanceHowItWorks() {
   return (
-    <section id="asistencias" className="bg-gray-50 py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="asistencias" className="relative overflow-hidden bg-white py-16 md:py-24">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 bg-[url('/fondos/fondo3.png')] bg-[length:100%_100%] bg-center bg-no-repeat"
+      />
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="mx-auto mb-12 max-w-3xl text-center md:mb-16"
+          className="mx-auto mb-14 max-w-3xl text-center md:mb-20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#fd741a] md:text-base">
-            Control de asistencias
-          </p>
           <h2 className="text-3xl font-bold leading-tight text-[#101d69] md:text-4xl lg:text-5xl">
-            Marcacion segura solo por QR
+            Marcacion <span className="text-[#fd741a]">segura</span> solo por QR
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-gray-600 md:text-lg">
-            Tus trabajadores ingresan a su plataforma, escanean el QR del punto autorizado y registran entrada o salida con control de ubicacion y dispositivo.
-          </p>
         </motion.div>
 
         <motion.div
-          className="grid gap-5 md:grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
           variants={{
             hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+            visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
           }}
         >
           {attendanceFlowItems.map((item, index) => {
-            const IconComponent = item.icon
             return (
               <motion.div
                 key={item.title}
-                className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-[#101d69]/10 bg-white p-6 shadow-[0_18px_50px_rgba(16,29,105,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-[#fd741a]/40 hover:shadow-[0_24px_70px_rgba(16,29,105,0.13)] md:p-7"
+                className={`group flex h-full flex-col items-center rounded-[2rem] p-8 text-center shadow-[0_16px_45px_rgba(16,29,105,0.10)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_70px_rgba(16,29,105,0.20)] ${item.card}`}
                 variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
                 }}
               >
-                <div className="mb-6 flex items-start justify-between gap-4">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-[1.4rem] bg-[#101d69] text-white shadow-lg shadow-[#101d69]/20 transition-transform duration-300 group-hover:scale-105">
-                    <IconComponent weight="duotone" className="h-9 w-9 text-[#fd741a]" />
-                  </div>
-                  <span className="rounded-full border border-[#fd741a]/20 bg-[#fd741a]/10 px-3 py-1 text-xs font-bold text-[#fd741a]">
-                    {item.metric}
-                  </span>
+                <div className="relative mb-6 flex h-40 w-40 items-center justify-center">
+                  <div className={`absolute h-24 w-24 rounded-full ${item.circle}`} />
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="relative z-10 h-40 w-40 object-contain"
+                  />
                 </div>
 
-                <p className="mb-3 inline-flex items-center gap-2 text-sm font-bold text-[#fd741a]">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#fd741a]/10 text-xs">
+                <p className="mb-3 inline-flex items-center gap-2 text-sm font-bold text-[#101d69]">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#101d69]/10 text-xs">
                     {index + 1}
                   </span>
                   {item.highlight}
                 </p>
 
-                <h3 className="text-xl font-bold leading-snug text-gray-950">
+                <h3 className="text-xl font-bold leading-snug text-[#101d69]">
                   {item.title}
                 </h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-gray-600 md:text-base">
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-gray-700">
                   {item.text}
                 </p>
-
-                <div className="mt-6 h-px w-full bg-gradient-to-r from-[#101d69]/15 via-[#fd741a]/30 to-transparent" />
               </motion.div>
             )
           })}

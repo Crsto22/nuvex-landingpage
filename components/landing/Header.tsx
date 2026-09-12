@@ -28,8 +28,8 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b-4 border-b-[#101d69] ${
-          isScrolled ? 'bg-white shadow-sm' : 'bg-white'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-white shadow-sm' : 'bg-transparent'
         }`}
       >
         <div className="w-full px-12 sm:px-16 lg:px-24">
@@ -45,9 +45,10 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-medium text-gray-700 hover:text-[#101d69] transition-colors whitespace-nowrap"
+                  className="group relative text-sm font-medium text-[#101d69] transition-colors whitespace-nowrap"
                 >
                   {link.label}
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-0 rounded-full bg-[#101d69] transition-all duration-300 ease-out group-hover:w-full" />
                 </Link>
               ))}
             </nav>

@@ -9,14 +9,14 @@ export default function FloatingButtons() {
         href="https://wa.me/51923328058"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 flex items-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all"
+        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 flex items-center gap-2 bg-[#25D366] text-white p-3 md:px-5 md:py-3 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <span className="text-sm font-semibold whitespace-nowrap">¿Necesitas ayuda?</span>
+        <span className="hidden md:inline text-sm font-semibold whitespace-nowrap">¿Necesitas ayuda?</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"

@@ -8,10 +8,28 @@ import FAQ from '@/components/landing/FAQ'
 import CustomSystems from '@/components/landing/CustomSystems'
 import Footer from '@/components/landing/Footer'
 import FloatingButtons from '@/components/landing/FloatingButtons'
+import { faqs } from '@/lib/faqs'
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+}
 
 export default function Home() {
   return (
     <main className="relative w-full bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute top-0 right-0 z-0 h-[560px] w-[60%] bg-[url('/fondos/fondo1.png')] bg-right-top bg-no-repeat bg-contain lg:h-[660px]"

@@ -3,8 +3,20 @@ import Footer from '@/components/landing/Footer'
 import FloatingButtons from '@/components/landing/FloatingButtons'
 
 export const metadata = {
-  title: 'Términos y Condiciones | Nuvex',
-  description: 'Términos y condiciones de uso del sistema POS Nuvex para tiendas de ropa.',
+  title: 'Términos y Condiciones',
+  description: 'Términos y condiciones de uso del sistema POS Nuvex para tiendas de ropa y boutiques en el Perú.',
+  alternates: {
+    canonical: '/terminos',
+  },
+  openGraph: {
+    title: 'Términos y Condiciones | Nuvex',
+    description: 'Términos y condiciones de uso del sistema POS Nuvex para tiendas de ropa y boutiques en el Perú.',
+    url: '/terminos',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 export default function TerminosPage() {
@@ -74,9 +86,9 @@ export default function TerminosPage() {
             La renovación puede ser automática o manual, según la pasarela y configuración del cliente. La falta de pago habilita la suspensión parcial o total del servicio.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">5. Período de prueba (7 días) y cancelación</h2>
+          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">5. Período de prueba (30 días) y cancelación</h2>
           <p>
-            Los nuevos usuarios pueden probar el Servicio durante <strong>7 días gratis</strong>. Al finalizar el período, la cuenta continuará activa únicamente si el usuario contrata un plan de pago.
+            Los nuevos usuarios pueden probar el Servicio durante <strong>30 días gratis</strong>. Al finalizar el período, la cuenta continuará activa únicamente si el usuario contrata un plan de pago.
           </p>
           <p>
             El cliente puede cancelar su plan en cualquier momento antes del siguiente ciclo de renovación. Nuvex puede cancelar o suspender la cuenta por incumplimiento contractual o uso indebido. La cancelación no elimina obligaciones pendientes de pago.

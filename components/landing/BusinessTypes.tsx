@@ -68,7 +68,7 @@ export default function BusinessTypes() {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 gap-28 sm:grid-cols-2 lg:grid-cols-5 sm:gap-8"
+          className="grid grid-cols-2 gap-x-4 gap-y-24 sm:gap-8 lg:grid-cols-5"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -83,12 +83,12 @@ export default function BusinessTypes() {
               <img
                 src={rubro.image}
                 alt={rubro.name}
-                className="absolute -top-20 left-1/2 z-10 h-40 w-40 -translate-x-1/2 object-contain drop-shadow-[0_18px_30px_rgba(16,29,105,0.25)] transition-transform duration-300 ease-out group-hover:-translate-y-4"
+                className="absolute -top-14 left-1/2 z-10 h-28 w-28 -translate-x-1/2 object-contain drop-shadow-[0_18px_30px_rgba(16,29,105,0.25)] transition-transform duration-300 ease-out group-hover:-translate-y-4 sm:-top-20 sm:h-40 sm:w-40"
               />
               <div
-                className={`flex flex-col items-center rounded-[2rem] px-6 pb-10 pt-24 text-center shadow-[0_18px_45px_rgba(16,29,105,0.15)] transition-shadow duration-300 ease-out group-hover:shadow-[0_40px_80px_rgba(16,29,105,0.45)] ${rubro.card}`}
+                className={`flex flex-col items-center rounded-[2rem] px-3 pb-8 pt-20 text-center shadow-[0_18px_45px_rgba(16,29,105,0.15)] transition-shadow duration-300 ease-out group-hover:shadow-[0_40px_80px_rgba(16,29,105,0.45)] sm:px-6 sm:pb-10 sm:pt-24 ${rubro.card}`}
               >
-                <h3 className="text-2xl font-bold text-white md:text-3xl">
+                <h3 className="text-lg font-bold text-white sm:text-2xl md:text-3xl">
                   {rubro.name}
                 </h3>
               </div>

@@ -51,9 +51,9 @@ export default function Hero() {
       {/* Hero 1 - POS */}
       <section className="relative bg-transparent pt-0 md:pt-0 pb-2 md:pb-4 overflow-hidden">
         <div className="max-w-7xl mx-auto px-12 sm:px-16 lg:px-24 -mt-2 lg:-mt-4">
-          <div className="relative h-[820px] sm:h-[760px] lg:h-[540px]">
+          <div className="relative h-[720px] sm:h-[720px] lg:h-[540px]">
             <motion.div
-              className="absolute inset-0 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
+              className="absolute inset-0 grid content-center grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center"
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
@@ -89,7 +89,7 @@ export default function Hero() {
 
               {/* Image */}
               <motion.div
-                className="order-first lg:order-last lg:col-span-5 relative h-72 sm:h-80 lg:h-[430px] w-full flex justify-center lg:justify-start items-center mt-8 lg:mt-0 -translate-y-4 lg:-translate-y-8"
+                className="order-first lg:order-last lg:col-span-5 relative h-72 sm:h-80 lg:h-[430px] w-full flex justify-center lg:justify-start items-center mt-4 lg:mt-0 -translate-y-4 lg:-translate-y-8"
                 variants={itemVariants}
               >
                 <div className="relative w-full h-full flex items-center justify-center lg:justify-start">
@@ -139,9 +139,9 @@ export default function Hero() {
           className="pointer-events-none absolute top-0 left-0 z-0 h-full w-[70%] bg-[url('/fondos/fondo2.png')] bg-left-top bg-no-repeat bg-contain"
         />
         <div className="relative max-w-7xl mx-auto px-12 sm:px-16 lg:px-24">
-          <div className="relative h-[820px] sm:h-[760px] lg:h-[540px]">
+          <div className="relative h-[720px] sm:h-[720px] lg:h-[540px]">
             <motion.div
-              className="absolute inset-0 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
+              className="absolute inset-0 grid content-center grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center"
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
@@ -178,7 +178,7 @@ export default function Hero() {
 
               {/* Image */}
               <motion.div
-                className="order-first lg:order-first lg:col-span-5 relative h-72 sm:h-80 lg:h-[430px] w-full flex justify-center lg:justify-start items-center mt-8 lg:mt-0"
+                className="order-first lg:order-first lg:col-span-5 relative h-72 sm:h-80 lg:h-[430px] w-full flex justify-center lg:justify-start items-center mt-4 lg:mt-0"
                 variants={itemVariants}
               >
                 <AnimatePresence mode="wait">

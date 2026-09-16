@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { Analytics } from '@vercel/analytics/next'
+import FacebookPixel from '@/components/analytics/facebook-pixel'
 import './globals.css'
 
 const sora = localFont({
@@ -166,7 +167,12 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        {process.env.NODE_ENV === 'production' && (
+          <>
+            <Analytics />
+            <FacebookPixel />
+          </>
+        )}
       </body>
     </html>
   )

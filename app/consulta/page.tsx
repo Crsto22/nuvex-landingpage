@@ -6,6 +6,7 @@ import { CalendarBlank } from 'phosphor-react'
 import Header from '@/components/landing/Header'
 import Footer from '@/components/landing/Footer'
 import FloatingButtons from '@/components/landing/FloatingButtons'
+import { trackFacebookEvent } from '@/components/analytics/facebook-pixel'
 import { CPE_API_BASE_URL } from '@/lib/api'
 
 type ConsultaCpeResponse = {
@@ -78,6 +79,7 @@ export default function ConsultaCPE() {
       }
 
       setResultado(body as ConsultaCpeResponse)
+      trackFacebookEvent('Search', { content_name: 'consulta_cpe' })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Comprobante no encontrado')
     } finally {

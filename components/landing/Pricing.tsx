@@ -42,6 +42,7 @@ export default function Pricing() {
   const [affiliate, setAffiliate] = useState<AffiliateCodeResponse | null>(null)
   const [validatingAffiliate, setValidatingAffiliate] = useState(false)
   const [posSlide, setPosSlide] = useState(0)
+  const [hasOverflow, setHasOverflow] = useState(false)
 
   useEffect(() => {
     let active = true
@@ -99,6 +100,26 @@ export default function Pricing() {
     }
     setPosSlide(target)
   }
+
+  useEffect(() => {
+    const el = posCarouselRef.current
+    if (!el) return
+
+    const updateOverflow = () => {
+      setHasOverflow(el.scrollWidth > el.clientWidth + 8)
+    }
+
+    updateOverflow()
+    const observer = new ResizeObserver(updateOverflow)
+    observer.observe(el)
+    window.addEventListener('resize', updateOverflow)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', updateOverflow)
+    }
+  }, [plans, pricingView])
+
   const activeAffiliate = affiliate?.valid ? affiliate : null
   const attendanceMonthlyTotal = attendancePricing
     ? roundMoney(
@@ -293,7 +314,7 @@ export default function Pricing() {
           <motion.div
             ref={posCarouselRef}
             onScroll={handlePosScroll}
-            className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-2 md:overflow-visible md:pb-0 xl:grid-cols-4"
+            className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:gap-6"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -312,7 +333,7 @@ export default function Pricing() {
               return (
                 <motion.div
                   key={plan.code}
-                  className={`group relative flex w-full shrink-0 snap-center flex-col rounded-3xl bg-white transition-all duration-300 md:w-auto md:shrink md:snap-align-none ${
+                  className={`group relative flex w-[70%] shrink-0 snap-center flex-col rounded-3xl bg-white transition-all duration-300 sm:w-[42%] lg:w-[calc((100%-6rem)/5)] ${
                     highlighted
                       ? 'z-10 border-2 border-[#101d69] shadow-2xl xl:scale-[1.02]'
                       : 'z-0 border border-[#dbe3f3] shadow-sm hover:border-[#101d69]'
@@ -422,7 +443,8 @@ export default function Pricing() {
             })}
           </motion.div>
 
-          <div className="mt-6 flex items-center justify-center gap-4 md:hidden">
+          {hasOverflow && (
+          <div className="mt-6 flex items-center justify-center gap-4">
             <button
               type="button"
               aria-label="Plan anterior"
@@ -445,6 +467,7 @@ export default function Pricing() {
               <CaretRight size={18} weight="bold" />
             </button>
           </div>
+          )}
           </>
         )}
 
@@ -729,6 +752,7 @@ function planDescription(plan: PlanDefinition) {
   const descriptions: Record<PlanCode, string> = {
     prueba: `${plan.trialDays ?? 30} dias para probar Nuvex`,
     basico: 'Para vender y controlar lo esencial',
+    impulsa: 'Para vender, cobrar y controlar stock',
     emprendedor: 'Para tiendas que empiezan a crecer',
     crecimiento: 'La opcion mas completa para operar',
     empresarial: 'Para operaciones con mas volumen',

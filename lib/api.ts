@@ -7,6 +7,7 @@ export const CPE_API_BASE_URL =
 export type PlanCode =
   | 'prueba'
   | 'basico'
+  | 'impulsa'
   | 'emprendedor'
   | 'crecimiento'
   | 'empresarial'

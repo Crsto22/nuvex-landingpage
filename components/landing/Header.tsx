@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { List, SignIn } from 'phosphor-react'
 import {
@@ -42,7 +43,14 @@ export default function Header() {
           <div className="flex justify-between items-center h-16 lg:h-20">
             {/* Logo */}
             <Link href="/" className="flex-shrink-0 flex items-center gap-3">
-              <img src="/logopng.png" alt="Nuvex Logo" className="h-12 lg:h-14 w-auto" />
+              <Image
+                src="/logopng.webp"
+                alt="Nuvex Logo"
+                width={220}
+                height={73}
+                sizes="220px"
+                className="h-12 w-auto lg:h-14"
+              />
             </Link>
 
             {/* Desktop Menu */}
@@ -90,7 +98,14 @@ export default function Header() {
                 <SheetHeader className="border-b border-gray-100 p-5">
                   <SheetTitle asChild>
                     <Link href="/" onClick={() => setIsOpen(false)}>
-                      <img src="/logopng.png" alt="Nuvex Logo" className="h-10 w-auto" />
+                      <Image
+                        src="/logopng.webp"
+                        alt="Nuvex Logo"
+                        width={160}
+                        height={53}
+                        sizes="160px"
+                        className="h-10 w-auto"
+                      />
                     </Link>
                   </SheetTitle>
                 </SheetHeader>

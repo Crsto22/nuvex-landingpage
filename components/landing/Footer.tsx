@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import {
   WhatsappLogo,
@@ -72,7 +73,14 @@ export default function Footer() {
           {/* Brand section */}
           <motion.div className="lg:col-span-1" variants={itemVariants}>
             <div className="flex items-center gap-3 mb-4">
-              <img src="/logopng.png" alt="Nuvex Logo" className="h-10 md:h-12 w-auto brightness-0 invert" />
+              <Image
+                src="/logopng.webp"
+                alt="Nuvex Logo"
+                width={190}
+                height={63}
+                sizes="190px"
+                className="h-10 w-auto brightness-0 invert md:h-12"
+              />
             </div>
             <p className="text-white/70 text-sm leading-relaxed mb-4">
               El POS para tu tienda de ropa. Controla, vende, crece.

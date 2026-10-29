@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import {
   ArrowRight,
@@ -32,9 +33,12 @@ export default function CustomSystems() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="flex items-center justify-center"
           >
-            <img
-              src="/iconos/medida.png"
+            <Image
+              src="/iconos/medida.webp"
               alt="Sistemas a medida para tu negocio"
+              width={900}
+              height={450}
+              sizes="(max-width: 1024px) 100vw, 560px"
               className="h-auto w-full max-w-xl object-contain"
             />
           </motion.div>
@@ -108,9 +112,12 @@ export default function CustomSystems() {
                             ERP Kiments — Dashboard
                           </span>
                         </div>
-                        <img
-                          src="/kiments-erp.png"
+                        <Image
+                          src="/kiments-erp.webp"
                           alt="Sistema ERP a medida desarrollado para Kiments"
+                          width={1366}
+                          height={633}
+                          sizes="(max-width: 1024px) 100vw, 390px"
                           className="w-full object-cover"
                         />
                       </div>
@@ -145,9 +152,12 @@ export default function CustomSystems() {
                             kiments.com.pe
                           </span>
                         </div>
-                        <img
-                          src="/kiments-ecommerce.png"
+                        <Image
+                          src="/kiments-ecommerce.webp"
                           alt="Ecommerce de Kiments conectado al ERP"
+                          width={1366}
+                          height={633}
+                          sizes="(max-width: 1024px) 100vw, 390px"
                           className="w-full object-cover"
                         />
                       </div>

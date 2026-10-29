@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowRight } from 'phosphor-react'
@@ -9,8 +10,8 @@ export default function Hero() {
   const [assistanceImageIndex, setAssistanceImageIndex] = useState(0)
   const [productImageIndex, setProductImageIndex] = useState(0)
 
-  const assistanceImages = ['/asistencia 1.png', '/asistencia 2.png']
-  const productImages = ['/fondos/mochila.png', '/fondos/ropa.png', '/fondos/zapatilla.png']
+  const assistanceImages = ['/asistencia 1.webp', '/asistencia 2.webp']
+  const productImages = ['/fondos/mochila.webp', '/fondos/ropa.webp', '/fondos/zapatilla.webp']
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -93,33 +94,57 @@ export default function Hero() {
                 variants={itemVariants}
               >
                 <div className="relative w-full h-full flex items-center justify-center lg:justify-start">
-                  <motion.img
-                    src="/fondos/laptop.png"
-                    alt="POS en laptop"
+                  <motion.div
                     className="w-full lg:w-[100%] max-w-none object-contain drop-shadow-2xl"
                     initial={{ opacity: 0, y: 24, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
-                  />
-                  <motion.img
-                    src="/fondos/celular.png"
-                    alt="POS en celular"
+                  >
+                    <Image
+                      src="/fondos/laptop.webp"
+                      alt="POS en laptop"
+                      width={1200}
+                      height={800}
+                      sizes="(max-width: 1024px) 100vw, 500px"
+                      unoptimized
+                      loading="eager"
+                      fetchPriority="high"
+                      className="h-auto w-full object-contain"
+                    />
+                  </motion.div>
+                  <motion.div
                     className="absolute right-0 bottom-[6%] w-[28%] sm:w-[26%] lg:w-[30%] max-w-none object-contain drop-shadow-2xl"
                     initial={{ opacity: 0, x: 24, scale: 0.98 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
-                  />
+                  >
+                    <Image
+                      src="/fondos/celular.webp"
+                      alt="POS en celular"
+                      width={533}
+                      height={800}
+                      sizes="(max-width: 1024px) 28vw, 150px"
+                      className="h-auto w-full object-contain"
+                    />
+                  </motion.div>
                   <AnimatePresence mode="wait">
-                    <motion.img
+                    <motion.div
                       key={productImages[productImageIndex]}
-                      src={productImages[productImageIndex]}
-                      alt="Producto en venta"
                       className="absolute left-0 bottom-[6%] z-10 w-[44%] sm:w-[42%] lg:w-[46%] max-w-none object-contain drop-shadow-2xl"
                       initial={{ opacity: 0, x: -24, scale: 0.9 }}
                       animate={{ opacity: 1, x: 0, scale: 1 }}
                       exit={{ opacity: 0, x: 24, scale: 0.9 }}
                       transition={{ duration: 0.5, ease: 'easeOut' }}
-                    />
+                    >
+                      <Image
+                        src={productImages[productImageIndex]}
+                        alt="Producto en venta"
+                        width={800}
+                        height={800}
+                        sizes="(max-width: 1024px) 44vw, 230px"
+                        className="h-auto w-full object-contain"
+                      />
+                    </motion.div>
                   </AnimatePresence>
                 </div>
               </motion.div>
@@ -136,7 +161,7 @@ export default function Hero() {
       <section className="relative bg-transparent pt-4 md:pt-6 pb-8 md:pb-10 overflow-hidden">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute top-0 left-0 z-0 h-full w-[70%] bg-[url('/fondos/fondo2.png')] bg-left-top bg-no-repeat bg-contain"
+          className="pointer-events-none absolute top-0 left-0 z-0 h-full w-[70%] bg-[url('/fondos/fondo2.webp')] bg-left-top bg-no-repeat bg-contain"
         />
         <div className="relative max-w-7xl mx-auto px-12 sm:px-16 lg:px-24">
           <div className="relative h-[720px] sm:h-[720px] lg:h-[540px]">
@@ -182,16 +207,24 @@ export default function Hero() {
                 variants={itemVariants}
               >
                 <AnimatePresence mode="wait">
-                  <motion.img
+                  <motion.div
                     key={assistanceImages[assistanceImageIndex]}
-                    src={assistanceImages[assistanceImageIndex]}
-                    alt="Control de asistencias en acción"
                     className="absolute inset-0 m-auto w-[70%] sm:w-[64%] lg:w-[72%] max-w-none h-full object-contain drop-shadow-2xl"
                     initial={{ opacity: 0, x: 32, scale: 0.98 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: -32, scale: 0.98 }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
-                  />
+                  >
+                    <Image
+                      src={assistanceImages[assistanceImageIndex]}
+                      alt="Control de asistencias en acción"
+                      width={600}
+                      height={900}
+                      sizes="(max-width: 1024px) 70vw, 360px"
+                      className="h-full w-full object-contain"
+                      loading="lazy"
+                    />
+                  </motion.div>
                 </AnimatePresence>
               </motion.div>
             </motion.div>

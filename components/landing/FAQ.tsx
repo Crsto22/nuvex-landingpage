@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CaretDown } from 'phosphor-react'
 import { faqs } from '@/lib/faqs'
@@ -23,9 +24,12 @@ export default function FAQ() {
             transition={{ duration: 0.6 }}
             className="flex items-center justify-center"
           >
-            <img
-              src="/iconos/preguntas.png"
+            <Image
+              src="/iconos/preguntas.webp"
               alt="Preguntas frecuentes sobre Nuvex"
+              width={640}
+              height={800}
+              sizes="(max-width: 1024px) 100vw, 448px"
               className="h-auto w-full max-w-md object-contain"
             />
           </motion.div>

@@ -1,31 +1,32 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 
 const rubros = [
   {
     name: 'Carteras',
-    image: '/rubro/carteras.png',
+    image: '/rubro/carteras.webp',
     card: 'bg-[#7c3aed]',
   },
   {
     name: 'Ropa',
-    image: '/rubro/ropa.png',
+    image: '/rubro/ropa.webp',
     card: 'bg-[#e11d48]',
   },
   {
     name: 'Calzado',
-    image: '/rubro/zapatilla.png',
+    image: '/rubro/zapatilla.webp',
     card: 'bg-[#0d9488]',
   },
   {
     name: 'Mochilas',
-    image: '/rubro/mochila.png',
+    image: '/rubro/mochila.webp',
     card: 'bg-[#d97706]',
   },
   {
     name: 'Bodega',
-    image: '/rubro/bodega.png',
+    image: '/rubro/bodega.webp',
     card: 'bg-[#0284c7]',
   },
 ]
@@ -52,7 +53,7 @@ export default function BusinessTypes() {
     <section id="rubros" className="relative overflow-hidden bg-white py-16 md:py-24">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 bg-[url('/fondos/fondo3.png')] bg-[length:100%_100%] bg-center bg-no-repeat"
+        className="pointer-events-none absolute inset-0 z-0 bg-[url('/fondos/fondo3.webp')] bg-[length:100%_100%] bg-center bg-no-repeat"
       />
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -80,9 +81,12 @@ export default function BusinessTypes() {
               variants={cardVariants}
               className="group relative"
             >
-              <img
+              <Image
                 src={rubro.image}
                 alt={rubro.name}
+                width={700}
+                height={700}
+                sizes="(max-width: 640px) 112px, 160px"
                 className="absolute -top-14 left-1/2 z-10 h-28 w-28 -translate-x-1/2 object-contain drop-shadow-[0_18px_30px_rgba(16,29,105,0.25)] transition-transform duration-300 ease-out group-hover:-translate-y-4 sm:-top-20 sm:h-40 sm:w-40"
               />
               <div

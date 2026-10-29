@@ -1,6 +1,7 @@
 'use client'
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import {
   Barcode,
@@ -197,10 +198,14 @@ export default function Pricing() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 flex items-center"
       >
-        <img
-          src="/fondos/fondo6.png"
+        <Image
+          src="/fondos/fondo6.webp"
           alt=""
+          width={1322}
+          height={1190}
+          sizes="100vw"
           className="w-full object-contain"
+          loading="lazy"
         />
       </div>
       <div className="relative z-10 mx-auto w-full px-3 sm:px-4 lg:px-6">
@@ -485,7 +490,7 @@ export default function Pricing() {
                   {[
                     {
                       name: 'Trabajadores',
-                      image: '/iconos/trabajadores.png',
+                      image: '/iconos/trabajadores.webp',
                       card: 'bg-[#101d69]',
                       value: attendanceEmployees,
                       helper: `S/. ${formatMoney(Number(attendancePricing.employeeUnitPrice))} por trabajador`,
@@ -496,7 +501,7 @@ export default function Pricing() {
                     },
                     {
                       name: 'Punto QR',
-                      image: '/iconos/puntoqr.png',
+                      image: '/iconos/puntoqr.webp',
                       card: 'bg-[#14b8a6]',
                       value: attendanceQrPoints,
                       helper: `S/. ${formatMoney(Number(attendancePricing.qrPointUnitPrice))} por punto QR`,
@@ -507,9 +512,12 @@ export default function Pricing() {
                     },
                   ].map((item) => (
                     <motion.div key={item.name} variants={cardVariants} className="group relative">
-                      <img
+                      <Image
                         src={item.image}
                         alt={item.name}
+                        width={700}
+                        height={700}
+                        sizes="(max-width: 640px) 96px, 128px"
                         className="absolute -top-14 left-1/2 z-10 h-24 w-24 -translate-x-1/2 object-contain drop-shadow-[0_18px_30px_rgba(16,29,105,0.25)] transition-transform duration-300 ease-out group-hover:-translate-y-3 sm:-top-16 sm:h-32 sm:w-32"
                       />
                       <div

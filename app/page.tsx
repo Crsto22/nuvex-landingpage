@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Header from '@/components/landing/Header'
 import Hero from '@/components/landing/Hero'
 import BusinessTypes from '@/components/landing/BusinessTypes'
@@ -32,8 +33,19 @@ export default function Home() {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-0 right-0 z-0 h-[560px] w-[60%] bg-[url('/fondos/fondo1.png')] bg-right-top bg-no-repeat bg-contain lg:h-[660px]"
-      />
+        className="pointer-events-none absolute right-0 top-0 z-0 h-[560px] w-[60%] lg:h-[660px]"
+      >
+        <Image
+          src="/fondos/fondo1.webp"
+          alt=""
+          fill
+          sizes="60vw"
+          unoptimized
+          loading="eager"
+          fetchPriority="high"
+          className="object-contain object-right-top"
+        />
+      </div>
       <Header />
       <Hero />
       <BusinessTypes />
@@ -45,7 +57,14 @@ export default function Home() {
           aria-hidden="true"
           className="pointer-events-none absolute inset-y-0 left-0 z-0"
         >
-          <img src="/fondos/fondo%205.png" alt="" className="h-full w-auto" />
+          <Image
+            src="/fondos/fondo 5.webp"
+            alt=""
+            width={699}
+            height={1322}
+            className="h-full w-auto"
+            loading="lazy"
+          />
         </div>
         <CustomSystems />
         <FAQ />

@@ -1,31 +1,32 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 
 const attendanceFlowItems = [
   {
-    image: '/iconos/marcaciones%20(4).png',
+    image: '/iconos/marcaciones%20(4).webp',
     title: 'Marcacion por QR',
     text: 'El trabajador entra a su plataforma y escanea el QR asignado al punto de asistencia.',
     card: 'bg-[#fef3c7]',
     circle: 'bg-[#fbbf24]',
   },
   {
-    image: '/iconos/marcaciones%20(1).png',
+    image: '/iconos/marcaciones%20(1).webp',
     title: 'QR dinamico o normal',
     text: 'Puedes usar QR dinamico que cambia cada 20 segundos o QR normal para un punto fijo.',
     card: 'bg-[#cffafe]',
     circle: 'bg-[#22d3ee]',
   },
   {
-    image: '/iconos/marcaciones%20(2).png',
+    image: '/iconos/marcaciones%20(2).webp',
     title: 'Validacion por metros',
     text: 'Cada punto QR puede exigir que el trabajador este dentro del rango permitido.',
     card: 'bg-[#f3e8ff]',
     circle: 'bg-[#c084fc]',
   },
   {
-    image: '/iconos/marcaciones%20(3).png',
+    image: '/iconos/marcaciones%20(3).webp',
     title: 'Dispositivo registrado',
     text: 'Al ingresar se registra su dispositivo; si intenta marcar desde otro, queda bloqueado.',
     card: 'bg-[#dcfce7]',
@@ -38,7 +39,7 @@ export default function AttendanceHowItWorks() {
     <section id="asistencias" className="relative overflow-hidden bg-white py-16 md:py-24">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 bg-[url('/fondos/fondo3.png')] bg-[length:100%_100%] bg-center bg-no-repeat"
+        className="pointer-events-none absolute inset-0 z-0 bg-[url('/fondos/fondo3.webp')] bg-[length:100%_100%] bg-center bg-no-repeat"
       />
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -75,9 +76,12 @@ export default function AttendanceHowItWorks() {
               >
                 <div className="relative mb-6 flex h-40 w-40 items-center justify-center">
                   <div className={`absolute h-24 w-24 rounded-full ${item.circle}`} />
-                  <img
+                  <Image
                     src={item.image}
                     alt={item.title}
+                    width={700}
+                    height={700}
+                    sizes="160px"
                     className="relative z-10 h-40 w-40 object-contain"
                   />
                 </div>

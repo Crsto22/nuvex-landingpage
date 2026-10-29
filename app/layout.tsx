@@ -92,9 +92,9 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [
       {
-        url: '/logopng.png',
-        width: 2173,
-        height: 724,
+        url: '/logopng.webp',
+        width: 900,
+        height: 300,
         alt: 'Nuvex - POS en la nube para tiendas de ropa',
       },
     ],
@@ -103,7 +103,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteTitle,
     description: siteDescription,
-    images: ['/logopng.png'],
+    images: ['/logopng.webp'],
   },
   icons: {
     icon: [
@@ -122,7 +122,7 @@ const jsonLd = {
       '@id': `${siteUrl}/#organization`,
       name: 'Nuvex',
       url: siteUrl,
-      logo: `${siteUrl}/logopng.png`,
+      logo: `${siteUrl}/logopng.webp`,
       sameAs: [
         'https://www.instagram.com/nuvexpe/',
         'https://www.tiktok.com/@nuvexpe',

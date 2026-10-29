@@ -1,22 +1,23 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 
 const features = [
   {
-    image: '/iconos/caracteristica%20(1).png',
+    image: '/iconos/caracteristica%20(1).webp',
     title: 'Facturacion electronica SUNAT',
     card: 'bg-[#fef3c7]',
     circle: 'bg-[#fbbf24]',
   },
   {
-    image: '/iconos/caracteristica%20(2).png',
+    image: '/iconos/caracteristica%20(2).webp',
     title: 'Punto de venta (POS) e inventario',
     card: 'bg-[#cffafe]',
     circle: 'bg-[#22d3ee]',
   },
   {
-    image: '/iconos/caracteristica%20(3).png',
+    image: '/iconos/caracteristica%20(3).webp',
     title: 'Multiples sucursales y cajas',
     card: 'bg-[#f3e8ff]',
     circle: 'bg-[#c084fc]',
@@ -45,7 +46,7 @@ export default function FeaturedFeatures() {
     <section className="relative overflow-hidden bg-white py-16 md:py-24">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 bg-[url('/fondos/fondo4.png')] bg-[length:100%_100%] bg-center bg-no-repeat"
+        className="pointer-events-none absolute inset-0 z-0 bg-[url('/fondos/fondo4.webp')] bg-[length:100%_100%] bg-center bg-no-repeat"
       />
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -75,9 +76,12 @@ export default function FeaturedFeatures() {
             >
               <div className="relative mb-6 flex h-40 w-40 items-center justify-center">
                 <div className={`absolute h-24 w-24 rounded-full ${feature.circle}`} />
-                <img
+                <Image
                   src={feature.image}
                   alt={feature.title}
+                  width={700}
+                  height={700}
+                  sizes="160px"
                   className="relative z-10 h-40 w-40 object-contain"
                 />
               </div>

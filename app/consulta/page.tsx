@@ -104,7 +104,7 @@ export default function ConsultaCPE() {
   return (
     <main className="w-full bg-gray-50 font-sans">
       <Header />
-      <div className="min-h-screen pt-8 pb-20 px-4 flex flex-col items-center justify-center bg-none bg-no-repeat bg-left md:bg-[url('/fondos/fondo2.png')] md:bg-[length:50%]">
+      <div className="min-h-screen pt-8 pb-20 px-4 flex flex-col items-center justify-center bg-none bg-no-repeat bg-left md:bg-[url('/fondos/fondo2.webp')] md:bg-[length:50%]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

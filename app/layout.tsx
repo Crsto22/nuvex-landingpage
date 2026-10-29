@@ -147,7 +147,7 @@ const jsonLd = {
         '@type': 'Offer',
         price: '0',
         priceCurrency: 'PEN',
-        description: 'Prueba gratis de 30 días',
+        description: 'Prueba gratis de 14 días',
       },
       publisher: { '@id': `${siteUrl}/#organization` },
     },

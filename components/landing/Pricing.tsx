@@ -329,7 +329,7 @@ export default function Pricing() {
               const highlighted = plan.code === highlightedCode
               const price = getPlanPrice(plan, isAnnual, activeAffiliate)
               const showDiscount = price.previous !== price.current
-              const cta = plan.code === 'prueba' ? '30 dias de prueba' : 'Solicitar por WhatsApp'
+              const cta = plan.code === 'prueba' ? '14 dias de prueba' : 'Solicitar por WhatsApp'
               const planHref =
                 plan.code === 'prueba'
                   ? 'https://app.nuvex.pe/register'
@@ -439,7 +439,7 @@ export default function Pricing() {
                         href="https://app.nuvex.pe/register"
                         className="font-bold text-[#101d69] underline underline-offset-2 transition-colors hover:text-[#fd741a]"
                       >
-                        prueba gratis 30 días
+                        prueba gratis 14 días
                       </a>
                     </p>
                   </div>
@@ -758,7 +758,7 @@ function featureItems(plan: PlanDefinition) {
 
 function planDescription(plan: PlanDefinition) {
   const descriptions: Record<PlanCode, string> = {
-    prueba: `${plan.trialDays ?? 30} dias para probar Nuvex`,
+    prueba: `${plan.trialDays ?? 14} dias para probar Nuvex`,
     basico: 'Para vender y controlar lo esencial',
     impulsa: 'Para vender, cobrar y controlar stock',
     emprendedor: 'Para tiendas que empiezan a crecer',

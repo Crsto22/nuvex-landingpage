@@ -79,7 +79,7 @@ export default function Hero() {
 
                 <motion.div className="flex flex-col sm:flex-row gap-4 w-full" variants={itemVariants}>
                   <a href="https://app.nuvex.pe/register" className="w-full sm:w-auto px-8 py-4 bg-[#101d69] text-white font-semibold rounded-full hover:bg-[#0d1650] transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl active:bg-[#0d1650]">
-                    Empezar gratis 30 días
+                    Empezar gratis 14 días
                     <ArrowRight size={18} weight="bold" />
                   </a>
                   <a href="#planes" className="w-full sm:w-auto px-8 py-4 text-[#101d69] font-semibold rounded-full border-2 border-[#101d69] hover:bg-[#101d69] hover:text-white transition-all flex items-center justify-center gap-2">
@@ -192,7 +192,7 @@ export default function Hero() {
 
                 <motion.div className="flex flex-col sm:flex-row gap-4 w-full" variants={itemVariants}>
                   <a href="https://app.nuvex.pe/register" className="w-full sm:w-auto px-8 py-4 bg-[#101d69] text-white font-semibold rounded-full hover:bg-[#0d1650] transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl active:bg-[#0d1650]">
-                    Empezar gratis 30 días
+                    Empezar gratis 14 días
                     <ArrowRight size={18} weight="bold" />
                   </a>
                   <a href="#planes" className="w-full sm:w-auto px-8 py-4 text-[#101d69] font-semibold rounded-full border-2 border-[#101d69] hover:bg-[#101d69] hover:text-white transition-all flex items-center justify-center gap-2">

@@ -1,8 +1,8 @@
 export const faqs = [
   {
-    question: '¿Los 30 días gratis son reales?',
+    question: '¿Los 14 días gratis son reales?',
     answer:
-      'Sí. Te damos 30 días de acceso completo a todas las funcionalidades, sin tarjeta de crédito y sin compromiso. Prueba todo antes de decidir.',
+      'Sí. Te damos 14 días de acceso completo a todas las funcionalidades, sin tarjeta de crédito y sin compromiso. Prueba todo antes de decidir.',
   },
   {
     question: '¿Para qué tipo de negocios sirve?',

@@ -4,7 +4,7 @@ import Hero from '@/components/landing/Hero'
 import BusinessTypes from '@/components/landing/BusinessTypes'
 import FeaturedFeatures from '@/components/landing/FeaturedFeatures'
 import AttendanceHowItWorks from '@/components/landing/AttendanceHowItWorks'
-import Pricing from '@/components/landing/Pricing'
+import DeferredPricing from '@/components/landing/DeferredPricing'
 import FAQ from '@/components/landing/FAQ'
 import CustomSystems from '@/components/landing/CustomSystems'
 import Footer from '@/components/landing/Footer'
@@ -51,7 +51,7 @@ export default function Home() {
       <BusinessTypes />
       <FeaturedFeatures />
       <AttendanceHowItWorks />
-      <Pricing />
+      <DeferredPricing />
       <div className="relative">
         <div
           aria-hidden="true"

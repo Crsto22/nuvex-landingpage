@@ -28,7 +28,7 @@ export default function Hero() {
   }, [productImages.length])
 
   const containerVariants: Variants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 1 },
     visible: {
       opacity: 1,
       transition: {
@@ -39,7 +39,7 @@ export default function Hero() {
   }
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 1, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
@@ -96,7 +96,7 @@ export default function Hero() {
                 <div className="relative w-full h-full flex items-center justify-center lg:justify-start">
                   <motion.div
                     className="w-full lg:w-[100%] max-w-none object-contain drop-shadow-2xl"
-                    initial={{ opacity: 0, y: 24, scale: 0.98 }}
+                    initial={{ opacity: 1, y: 24, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
                   >
@@ -114,7 +114,7 @@ export default function Hero() {
                   </motion.div>
                   <motion.div
                     className="absolute right-0 bottom-[6%] w-[28%] sm:w-[26%] lg:w-[30%] max-w-none object-contain drop-shadow-2xl"
-                    initial={{ opacity: 0, x: 24, scale: 0.98 }}
+                    initial={{ opacity: 1, x: 24, scale: 0.98 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
                   >
@@ -131,7 +131,7 @@ export default function Hero() {
                     <motion.div
                       key={productImages[productImageIndex]}
                       className="absolute left-0 bottom-[6%] z-10 w-[44%] sm:w-[42%] lg:w-[46%] max-w-none object-contain drop-shadow-2xl"
-                      initial={{ opacity: 0, x: -24, scale: 0.9 }}
+                      initial={{ opacity: 1, x: -24, scale: 0.9 }}
                       animate={{ opacity: 1, x: 0, scale: 1 }}
                       exit={{ opacity: 0, x: 24, scale: 0.9 }}
                       transition={{ duration: 0.5, ease: 'easeOut' }}

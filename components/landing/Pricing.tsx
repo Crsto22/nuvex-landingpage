@@ -193,7 +193,7 @@ export default function Pricing() {
   }
 
   return (
-    <section id="planes" className="relative overflow-hidden bg-white py-16 md:py-24">
+    <section className="relative overflow-hidden bg-white py-16 md:py-24">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 flex items-center"

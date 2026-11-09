@@ -4,145 +4,148 @@ import FloatingButtons from '@/components/landing/FloatingButtons'
 
 export const metadata = {
   title: 'Términos y Condiciones',
-  description: 'Términos y condiciones de uso del sistema POS Nuvex para tiendas de ropa y boutiques en el Perú.',
-  alternates: {
-    canonical: '/terminos',
-  },
-  openGraph: {
-    title: 'Términos y Condiciones | Nuvex',
-    description: 'Términos y condiciones de uso del sistema POS Nuvex para tiendas de ropa y boutiques en el Perú.',
-    url: '/terminos',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  description: 'Términos y condiciones de uso de la plataforma Nuvex.',
+  alternates: { canonical: '/terminos' },
 }
 
-export default function TerminosPage() {
-  const currentDate = new Date().toLocaleDateString('es-PE', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
+const updatedAt = '9 de noviembre de 2026'
 
+export default function TerminosPage() {
   return (
     <main className="w-full bg-white">
       <Header />
-      
-      {/* Hero Section */}
-      <div className="bg-[#101d69] pt-32 pb-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Términos y Condiciones
-          </h1>
-          <p className="text-xl text-white/80">
-            Última actualización: {currentDate}
-          </p>
+      <section className="bg-[#101d69] px-4 pb-20 pt-32">
+        <div className="mx-auto max-w-4xl text-center">
+          <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">Términos y Condiciones</h1>
+          <p className="text-xl text-white/80">Última actualización: {updatedAt}</p>
         </div>
-      </div>
+      </section>
 
-      {/* Content Section */}
-      <div className="max-w-4xl mx-auto px-4 py-16 md:py-24">
-        <div className="prose prose-lg prose-blue max-w-none text-gray-700">
-          
-          <p className="lead text-xl text-gray-600 mb-8">
-            Al acceder al sitio web de Nuvex o registrarse en la plataforma (en adelante, "el Servicio"), declaras haber leído, comprendido y aceptado los presentes Términos y Condiciones. Si no estás de acuerdo con alguna parte, te pedimos no usar el Servicio.
-          </p>
+      <article className="prose prose-lg mx-auto max-w-4xl px-4 py-16 text-gray-700 md:py-24">
+        <p className="lead text-xl text-gray-600">
+          Estos Términos y Condiciones regulan el acceso y uso del sitio web y la plataforma Nuvex. Al crear una cuenta,
+          contratar un plan o utilizar el Servicio, aceptas estos términos en representación propia o de la empresa a la que
+          representas. Si no estás de acuerdo, no utilices el Servicio.
+        </p>
 
-          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">1. Datos de la empresa</h2>
-          <p>
-            El Servicio es prestado por <strong>Nuvex</strong>.
-            <br />
-            <strong>Correo de contacto:</strong> contacto@nuvex.com
-            <br />
-            <strong>Sitio web:</strong> https://nuvex.com
-          </p>
+        <h2>1. Identificación del proveedor</h2>
+        <p>
+          Nuvex es una plataforma operada por <strong>CORDEX T &amp; D S.A.C.</strong>, con RUC N.° 20615136663,
+          domicilio en Av. Los Ciruelos N.° 500, San Juan de Lurigancho, Lima, Perú (en adelante, “Nuvex”, “nosotros”
+          o “el Proveedor”). Puedes contactarnos en <a href="mailto:contacto@nuvex.pe">contacto@nuvex.pe</a>.
+        </p>
 
-          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">2. Descripción del servicio</h2>
-          <p>
-            Nuvex es una plataforma SaaS (Software as a Service) de gestión empresarial dirigida a tiendas de ropa y boutiques en el Perú, que ofrece — según el plan contratado — funcionalidades como:
-          </p>
-          <ul className="list-disc pl-6 mb-6 space-y-2">
-            <li>Punto de venta (POS) y caja diseñado para venta rápida de ropa.</li>
-            <li>Control de inventario especializado (tallas, colores, modelos) en tiempo real.</li>
-            <li>Facturación electrónica integrada con envío directo a SUNAT (boletas, facturas, notas).</li>
-            <li>Gestión de clientes y reportes financieros u operativos.</li>
-          </ul>
+        <h2>2. El Servicio</h2>
+        <p>
+          Nuvex es una solución de software como servicio (SaaS) para la gestión comercial de negocios. Según el plan
+          contratado, puede incluir punto de venta, caja, inventario, catálogo de productos, clientes, reportes, cuentas por
+          cobrar, cotizaciones, envíos, asistencia de trabajadores y facturación electrónica.
+        </p>
+        <p>
+          Algunas funcionalidades se conectan con servicios de terceros, tales como SUNAT, proveedores de mensajería,
+          logística, almacenamiento en la nube, analítica y canales de comunicación. Su disponibilidad depende también de
+          dichos terceros.
+        </p>
 
-          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">3. Cuenta y registro</h2>
-          <p>
-            Para usar el Servicio debes crear una cuenta proporcionando datos verídicos, completos y actualizados (entre ellos, RUC, datos de contacto del negocio y del responsable). Eres responsable de mantener la confidencialidad de tus credenciales y de toda actividad realizada con ellas.
-          </p>
-          <p>
-            El cliente declara tener autorización para usar dichas credenciales. La vigencia y renovación del certificado digital (si aplica) son responsabilidad del titular del RUC.
-          </p>
+        <h2>3. Cuenta, acceso y seguridad</h2>
+        <ul>
+          <li>Debes proporcionar información exacta, completa y actualizada al registrarte.</li>
+          <li>Eres responsable de las credenciales de tus usuarios y de toda actividad realizada desde tu cuenta.</li>
+          <li>Debes informar de inmediato cualquier acceso no autorizado o incidente de seguridad conocido.</li>
+          <li>Podemos suspender accesos para proteger la seguridad del Servicio, investigar un uso indebido o cumplir la ley.</li>
+        </ul>
 
-          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">4. Planes, precios y pagos</h2>
-          <p>
-            El servicio funciona con suscripción según el plan contratado. Los precios en soles peruanos (PEN) están publicados en el sitio web y pueden actualizarse. Cualquier cambio que te afecte se comunicará con anticipación razonable.
-          </p>
-          <p>
-            La renovación puede ser automática o manual, según la pasarela y configuración del cliente. La falta de pago habilita la suspensión parcial o total del servicio.
-          </p>
+        <h2>4. Planes, prueba, pagos y renovación</h2>
+        <p>
+          Los precios, funciones, límites y vigencia de cada plan son los publicados o acordados al momento de la contratación.
+          Cuando esté disponible, el periodo de prueba es de catorce (14) días, salvo que se indique otra condición en la oferta
+          aplicable. Al terminarlo, el acceso a funcionalidades de pago puede limitarse si no se contrata un plan.
+        </p>
+        <p>
+          Los importes se expresan en soles peruanos, salvo indicación contraria. Los pagos, renovaciones y cobros adicionales
+          se rigen por el plan o acuerdo aplicable. Un pago vencido puede ocasionar la suspensión del Servicio hasta su
+          regularización. Informaremos cambios materiales de precio antes de que apliquen a una renovación futura.
+        </p>
 
-          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">5. Período de prueba (14 días) y cancelación</h2>
-          <p>
-            Los nuevos usuarios pueden probar el Servicio durante <strong>14 días gratis</strong>. Al finalizar el período, la cuenta continuará activa únicamente si el usuario contrata un plan de pago.
-          </p>
-          <p>
-            El cliente puede cancelar su plan en cualquier momento antes del siguiente ciclo de renovación. Nuvex puede cancelar o suspender la cuenta por incumplimiento contractual o uso indebido. La cancelación no elimina obligaciones pendientes de pago.
-          </p>
+        <h2>5. Obligaciones del cliente</h2>
+        <ul>
+          <li>Usar el Servicio de conformidad con la legislación peruana y los derechos de terceros.</li>
+          <li>Mantener datos comerciales, tributarios, de productos y de clientes correctos y actualizados.</li>
+          <li>Obtener las autorizaciones necesarias para cargar o tratar datos personales mediante el Servicio.</li>
+          <li>No usar la plataforma para fraude, suplantación, emisión de comprobantes falsos, spam o actividades ilícitas.</li>
+          <li>No intentar vulnerar, descompilar, copiar, revender o interferir con la plataforma.</li>
+        </ul>
 
-          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">6. Obligaciones del usuario</h2>
-          <ul className="list-disc pl-6 mb-6 space-y-2">
-            <li>Usar el Servicio conforme a la normativa peruana vigente y a la moral.</li>
-            <li>El cliente es responsable de la veracidad y legalidad de su información fiscal y comercial.</li>
-            <li>No usar el Servicio para emitir comprobantes con información falsa, fraude, suplantación o actividades ilícitas.</li>
-            <li>Mantener actualizados los datos de tu negocio y notificarnos cualquier cambio relevante.</li>
-          </ul>
+        <h2>6. Datos del cliente y datos personales</h2>
+        <p>
+          El cliente conserva la titularidad de la información comercial, tributaria y de sus usuarios, trabajadores, clientes,
+          proveedores y contactos que incorpora al Servicio. En relación con los datos personales que el cliente carga para usar
+          la plataforma, el cliente actúa como responsable del tratamiento y Nuvex los trata siguiendo sus instrucciones,
+          para prestar, asegurar y mejorar el Servicio, salvo cuando la ley exija un tratamiento distinto.
+        </p>
+        <p>
+          El tratamiento de datos personales realizado directamente por Nuvex, así como las finalidades, terceros y derechos
+          aplicables, se describe en nuestra <a href="/privacidad">Política de Privacidad</a>.
+        </p>
 
-          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">7. Propiedad intelectual</h2>
-          <p>
-            El software, código fuente, marca, logos, diseños y elementos visuales son propiedad de Nuvex o sus licenciantes. El cliente recibe una licencia limitada, no exclusiva e intransferible para uso del servicio.
-          </p>
-          <p>
-            Los datos comerciales y tributarios cargados por el cliente son de titularidad exclusiva del cliente. Se prohíbe copiar, revender, sublicenciar o hacer ingeniería inversa sin autorización escrita.
-          </p>
+        <h2>7. Facturación electrónica y SUNAT</h2>
+        <p>
+          Cuando el cliente habilite la facturación electrónica, autoriza a Nuvex a procesar la información necesaria y a
+          transmitir comprobantes, resúmenes, comunicaciones y archivos relacionados a SUNAT, conforme a la configuración
+          seleccionada. El cliente es responsable de la veracidad de los datos fiscales, de mantener vigentes sus credenciales
+          y certificados, y de cumplir sus obligaciones tributarias.
+        </p>
+        <p>
+          Nuvex no garantiza la aceptación de un documento por SUNAT cuando existan datos erróneos, incumplimientos
+          normativos, indisponibilidad del tercero u otras causas ajenas a nuestro control.
+        </p>
 
-          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">8. Asistencia con SUNAT</h2>
-          <p>
-            Nuvex envía electrónicamente tus comprobantes a SUNAT. Los rechazos, observaciones o bajas de SUNAT por datos errados son responsabilidad del emisor.
-          </p>
-          <p>
-            Nuvex no garantiza la aceptación automática cuando los datos no cumplen la normativa o hay incidencias externas. La responsabilidad tributaria final del cumplimiento de obligaciones recae en el contribuyente.
-          </p>
+        <h2>8. Funcionalidades de asistencia y geolocalización</h2>
+        <p>
+          Si el cliente habilita asistencia mediante QR o ubicación, declara que cuenta con una base legal y ha informado a sus
+          trabajadores sobre el tratamiento de sus datos, incluidos fecha, hora, dispositivo y ubicación, cuando corresponda.
+          El cliente define el uso laboral de esta información y asume la responsabilidad de cumplir sus obligaciones como
+          empleador y responsable del tratamiento.
+        </p>
 
-          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">9. Disponibilidad del servicio</h2>
-          <p>
-            Hacemos esfuerzos razonables para mantener el Servicio disponible (objetivo referencial: 99.5%). Se podrán realizar mantenimientos programados con aviso previo. Se excluyen eventos de fuerza mayor e incidencias de terceros (SUNAT, hosting, DNS, red).
-          </p>
+        <h2>9. Propiedad intelectual</h2>
+        <p>
+          Nuvex, su software, documentación, marca, diseños y demás elementos del Servicio son propiedad de CORDEX T &amp; D
+          S.A.C. o de sus licenciantes. Te concedemos una licencia limitada, revocable, no exclusiva e intransferible para usar
+          el Servicio durante la vigencia de tu plan y conforme a estos términos.
+        </p>
 
-          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">10. Limitación de responsabilidad</h2>
-          <p>
-            Nuvex no responde por daño indirecto, lucro cesante, pérdida reputacional u oportunidad de negocio. Tampoco responde por multas, sanciones o contingencias tributarias originadas por los datos proporcionados por el cliente.
-          </p>
-          <p>
-            La responsabilidad total de Nuvex, de corresponder, se limitará a tres mensualidades del plan vigente. Esta limitación no aplica cuando la ley prohíba excluir dolo o culpa grave.
-          </p>
+        <h2>10. Disponibilidad, soporte y cambios</h2>
+        <p>
+          Procuramos mantener el Servicio operativo y seguro, pero no garantizamos funcionamiento ininterrumpido o libre de
+          errores. Podemos realizar mantenimientos, actualizaciones o cambios razonables en las funcionalidades. Cuando sea
+          posible, comunicaremos los mantenimientos programados que puedan afectar materialmente el uso del Servicio.
+        </p>
 
-          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">11. Modificaciones a los términos</h2>
-          <p>
-            Nuvex puede actualizar estos términos por cambios normativos, operativos o de seguridad. Se notificará por medios razonables dentro de la plataforma o canales registrados. El uso continuado del Servicio implica la aceptación de la versión vigente.
-          </p>
+        <h2>11. Suspensión, terminación y datos</h2>
+        <p>
+          Puedes solicitar la cancelación de tu cuenta escribiendo a nuestro correo de contacto. Podemos suspender o terminar
+          el acceso por incumplimiento de estos términos, falta de pago, riesgo de seguridad o requerimiento legal. La
+          conservación, eliminación o devolución de información puede estar sujeta a obligaciones legales, tributarias,
+          contractuales y técnicas aplicables.
+        </p>
 
-          <h2 className="text-2xl font-bold text-[#101d69] mt-12 mb-4">12. Ley aplicable y jurisdicción</h2>
-          <p>
-            Estos términos se rigen por las leyes de la República del Perú. Cualquier controversia derivada de la interpretación o ejecución se someterá a los Juzgados y Tribunales competentes, salvo que la ley señale un fuero distinto de carácter imperativo.
-          </p>
+        <h2>12. Limitación de responsabilidad</h2>
+        <p>
+          En la máxima medida permitida por ley, Nuvex no responde por daños indirectos, pérdida de ganancias, pérdida de
+          oportunidad, interrupción del negocio o sanciones derivadas de información incorrecta proporcionada por el cliente,
+          de obligaciones tributarias del cliente o de fallas de servicios externos. Nada de estos términos limita la
+          responsabilidad que no pueda excluirse legalmente.
+        </p>
 
-        </div>
-      </div>
+        <h2>13. Modificaciones y ley aplicable</h2>
+        <p>
+          Podemos actualizar estos términos por cambios legales, operativos, de seguridad o del Servicio. Publicaremos la
+          versión vigente en esta página y, cuando el cambio sea material, lo comunicaremos por medios razonables. Estos
+          términos se rigen por las leyes de la República del Perú; las controversias se someten a las autoridades competentes,
+          sin perjuicio de normas imperativas aplicables.
+        </p>
+      </article>
 
       <Footer />
       <FloatingButtons />

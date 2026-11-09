@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import Header from '@/components/landing/Header'
 import Hero from '@/components/landing/Hero'
+import ShippingLinkFeature from '@/components/landing/ShippingLinkFeature'
 import BusinessTypes from '@/components/landing/BusinessTypes'
 import FeaturedFeatures from '@/components/landing/FeaturedFeatures'
-import AttendanceHowItWorks from '@/components/landing/AttendanceHowItWorks'
 import DeferredPricing from '@/components/landing/DeferredPricing'
 import FAQ from '@/components/landing/FAQ'
 import CustomSystems from '@/components/landing/CustomSystems'
@@ -33,7 +33,7 @@ export default function Home() {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-0 top-0 z-0 h-[560px] w-[60%] lg:h-[660px]"
+        className="pointer-events-none absolute right-0 top-0 z-0 h-[560px] w-[60%] lg:h-[620px]"
       >
         <Image
           src="/fondos/fondo1.webp"
@@ -48,9 +48,9 @@ export default function Home() {
       </div>
       <Header />
       <Hero />
+      <ShippingLinkFeature />
       <BusinessTypes />
       <FeaturedFeatures />
-      <AttendanceHowItWorks />
       <DeferredPricing />
       <div className="relative">
         <div

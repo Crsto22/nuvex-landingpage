@@ -38,9 +38,9 @@ const jetbrainsMono = localFont({
 
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nuvex.pe').replace(/\/$/, '')
 
-const siteTitle = 'Nuvex | POS en la Nube y Sistema de Ventas para Tiendas de Ropa'
+const siteTitle = 'Nuvex | POS en la Nube y Sistema de Ventas para Negocios'
 const siteDescription =
-  'Nuvex es el POS en la nube y sistema de ventas para tiendas de ropa y boutiques: vende rápido, controla el inventario por talla, color y modelo, emite comprobantes electrónicos a SUNAT y cuadra tu caja.'
+  'Nuvex es el POS en la nube y sistema de ventas para negocios y tiendas: vende rápido, controla tu inventario, emite comprobantes electrónicos a SUNAT y cuadra tu caja desde un solo lugar.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -53,13 +53,14 @@ export const metadata: Metadata = {
     'POS',
     'punto de venta',
     'sistema de ventas',
-    'software para tiendas de ropa',
-    'inventario por variantes',
-    'talla color modelo',
+    'software para negocios',
+    'software para tiendas',
+    'inventario',
+    'control de inventario',
     'facturación electrónica',
     'comprobantes electrónicos',
     'SUNAT',
-    'boutique',
+    'control de caja',
     'SaaS Perú',
     'Nuvex',
   ],
@@ -95,7 +96,7 @@ export const metadata: Metadata = {
         url: '/logopng.webp',
         width: 900,
         height: 300,
-        alt: 'Nuvex - POS en la nube para tiendas de ropa',
+        alt: 'Nuvex - POS en la nube para negocios y tiendas',
       },
     ],
   },

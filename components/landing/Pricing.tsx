@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
@@ -8,13 +8,10 @@ import {
   Buildings,
   CaretLeft,
   CaretRight,
-  Check,
   CheckCircle,
   Database,
   MagnifyingGlass,
-  Minus,
   Package,
-  Plus,
   Receipt,
   Storefront,
   Users,
@@ -24,7 +21,6 @@ import {
 import type { Icon } from 'phosphor-react'
 import {
   AffiliateCodeResponse,
-  AttendancePricing,
   PlanCode,
   PlanDefinition,
   apiRequest,
@@ -32,11 +28,7 @@ import {
 
 export default function Pricing() {
   const [isAnnual, setIsAnnual] = useState(false)
-  const [pricingView, setPricingView] = useState<'pos' | 'attendance'>('pos')
   const [plans, setPlans] = useState<PlanDefinition[]>([])
-  const [attendancePricing, setAttendancePricing] = useState<AttendancePricing | null>(null)
-  const [attendanceEmployees, setAttendanceEmployees] = useState(10)
-  const [attendanceQrPoints, setAttendanceQrPoints] = useState(1)
   const [loadingPlans, setLoadingPlans] = useState(true)
   const [plansError, setPlansError] = useState('')
   const [affiliateCode, setAffiliateCode] = useState('')
@@ -48,14 +40,10 @@ export default function Pricing() {
   useEffect(() => {
     let active = true
 
-    Promise.all([
-      apiRequest<PlanDefinition[]>('/plans'),
-      apiRequest<AttendancePricing>('/plans/attendance-pricing').catch(() => null),
-    ])
-      .then(([result, attendance]) => {
+    apiRequest<PlanDefinition[]>('/plans')
+      .then((result) => {
         if (!active) return
         setPlans(result)
-        setAttendancePricing(attendance)
         setPlansError('')
       })
       .catch(() => {
@@ -119,31 +107,9 @@ export default function Pricing() {
       observer.disconnect()
       window.removeEventListener('resize', updateOverflow)
     }
-  }, [plans, pricingView])
+  }, [plans])
 
   const activeAffiliate = affiliate?.valid ? affiliate : null
-  const attendanceMonthlyTotal = attendancePricing
-    ? roundMoney(
-        Number(attendancePricing.employeeUnitPrice) * attendanceEmployees +
-          Number(attendancePricing.qrPointUnitPrice) * attendanceQrPoints,
-      )
-    : 0
-  const attendanceAffiliateDiscountPercent = Number(activeAffiliate?.discountPercent ?? 0)
-  const attendanceBaseTotal = isAnnual
-    ? roundMoney(
-        attendanceMonthlyTotal *
-          12 *
-          (1 - Number(attendancePricing?.annualDiscountPercent ?? 0) / 100),
-      )
-    : attendanceMonthlyTotal
-  const attendanceTotal =
-    attendanceAffiliateDiscountPercent > 0
-      ? roundMoney(
-          attendanceBaseTotal -
-            (attendanceBaseTotal * attendanceAffiliateDiscountPercent) / 100,
-        )
-      : attendanceBaseTotal
-  const attendanceAffiliateDiscountAmount = roundMoney(attendanceBaseTotal - attendanceTotal)
 
   async function applyAffiliateCode(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -280,26 +246,6 @@ export default function Pricing() {
               )}
             </span>
           </div>
-
-          <div className="grid w-full grid-cols-2 rounded-full bg-gray-100 p-1 lg:col-start-3 lg:w-auto lg:max-w-xs lg:justify-self-end">
-            {[
-              ['pos', 'POS'],
-              ['attendance', 'Asistencias'],
-            ].map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setPricingView(value as 'pos' | 'attendance')}
-                className={`rounded-full px-4 py-3 text-sm font-bold transition-all ${
-                  pricingView === value
-                    ? 'bg-[#101d69] text-white shadow-sm'
-                    : 'text-[#101d69] hover:bg-gray-50'
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
         </div>
 
         {loadingPlans && (
@@ -314,12 +260,12 @@ export default function Pricing() {
           </div>
         )}
 
-        {!loadingPlans && !plansError && pricingView === 'pos' && (
+        {!loadingPlans && !plansError && (
           <>
           <motion.div
             ref={posCarouselRef}
             onScroll={handlePosScroll}
-            className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:gap-6"
+            className="flex snap-x snap-mandatory gap-4 overflow-x-auto pt-6 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:gap-6"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -329,7 +275,7 @@ export default function Pricing() {
               const highlighted = plan.code === highlightedCode
               const price = getPlanPrice(plan, isAnnual, activeAffiliate)
               const showDiscount = price.previous !== price.current
-              const cta = plan.code === 'prueba' ? '14 dias de prueba' : 'Solicitar por WhatsApp'
+              const cta = plan.code === 'prueba' ? '14 días de prueba' : 'Solicitar por WhatsApp'
               const planHref =
                 plan.code === 'prueba'
                   ? 'https://app.nuvex.pe/register'
@@ -476,163 +422,6 @@ export default function Pricing() {
           </>
         )}
 
-        {!loadingPlans && !plansError && pricingView === 'attendance' && attendancePricing && (
-          <motion.div
-            className="mx-auto max-w-5xl"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-          >
-            <div className="grid gap-16 pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
-              <div>
-                <div className="grid grid-cols-2 gap-x-4 gap-y-24 sm:gap-8">
-                  {[
-                    {
-                      name: 'Trabajadores',
-                      image: '/iconos/trabajadores.webp',
-                      card: 'bg-[#101d69]',
-                      value: attendanceEmployees,
-                      helper: `S/. ${formatMoney(Number(attendancePricing.employeeUnitPrice))} por trabajador`,
-                      min: 1,
-                      onDecrease: () =>
-                        setAttendanceEmployees((value) => Math.max(1, value - 1)),
-                      onIncrease: () => setAttendanceEmployees((value) => value + 1),
-                    },
-                    {
-                      name: 'Punto QR',
-                      image: '/iconos/puntoqr.webp',
-                      card: 'bg-[#14b8a6]',
-                      value: attendanceQrPoints,
-                      helper: `S/. ${formatMoney(Number(attendancePricing.qrPointUnitPrice))} por punto QR`,
-                      min: 1,
-                      onDecrease: () =>
-                        setAttendanceQrPoints((value) => Math.max(1, value - 1)),
-                      onIncrease: () => setAttendanceQrPoints((value) => value + 1),
-                    },
-                  ].map((item) => (
-                    <motion.div key={item.name} variants={cardVariants} className="group relative">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={700}
-                        height={700}
-                        sizes="(max-width: 640px) 96px, 128px"
-                        className="absolute -top-14 left-1/2 z-10 h-24 w-24 -translate-x-1/2 object-contain drop-shadow-[0_18px_30px_rgba(16,29,105,0.25)] transition-transform duration-300 ease-out group-hover:-translate-y-3 sm:-top-16 sm:h-32 sm:w-32"
-                      />
-                      <div
-                        className={`flex flex-col items-center rounded-[2rem] px-4 pb-8 pt-16 text-center shadow-[0_18px_45px_rgba(16,29,105,0.15)] transition-shadow duration-300 ease-out group-hover:shadow-[0_40px_80px_rgba(16,29,105,0.35)] sm:px-6 sm:pt-20 ${item.card}`}
-                      >
-                        <h4 className="text-base font-bold text-white sm:text-xl md:text-2xl">
-                          {item.name}
-                        </h4>
-                        <p className="mt-1 text-xs text-white/80 sm:text-sm">
-                          {item.helper}
-                        </p>
-                        <div className="mt-4 flex items-center gap-3 rounded-full bg-white/15 p-1">
-                          <button
-                            type="button"
-                            onClick={item.onDecrease}
-                            disabled={item.value <= item.min}
-                            className="flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-[#101d69] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
-                          >
-                            <Minus size={16} weight="bold" />
-                          </button>
-                          <span className="min-w-8 text-center text-xl font-extrabold text-white">
-                            {item.value}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={item.onIncrease}
-                            className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#101d69] transition hover:scale-105"
-                          >
-                            <Plus size={16} weight="bold" />
-                          </button>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="mt-20 grid gap-4 sm:grid-cols-2">
-                {[
-                  'Marcacion solo por QR',
-                  'QR dinamico de 20 segundos o QR normal',
-                  'Limite de metros por punto QR',
-                  'Bloqueo por cambio de dispositivo',
-                  'Historial de entradas y salidas',
-                  'Reportes de asistencia',
-                ].map((feature) => (
-                  <div key={feature} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 pt-1">
-                      <Check size={20} weight="bold" className="text-[#14b8a6]" />
-                    </div>
-                    <p className="text-sm text-gray-700 md:text-base">
-                      {feature}
-                    </p>
-                  </div>
-                ))}
-                </div>
-              </div>
-
-            <motion.div
-              className="flex flex-col justify-between rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8"
-              variants={cardVariants}
-            >
-              <div>
-                <p className="mb-2 text-sm font-semibold text-[#101d69]/70">
-                  Total {isAnnual ? 'anual' : 'mensual'}
-                </p>
-                <div className="mb-2 flex flex-wrap items-end gap-2">
-                  <span className="text-4xl font-extrabold text-[#101d69] md:text-5xl">
-                    S/. {formatMoney(attendanceTotal)}
-                  </span>
-                  <span className="pb-2 text-sm text-[#101d69]/70">
-                    {isAnnual ? '/anio' : '/mes'}
-                  </span>
-                </div>
-                {isAnnual && (
-                  <p className="text-sm font-semibold text-[#fd741a]">
-                    S/. {formatMoney(attendanceTotal / 12)} promedio mensual
-                  </p>
-                )}
-                <div className="mt-8 space-y-3 rounded-xl bg-gray-50 p-4">
-                  <div className="flex justify-between gap-4 text-sm">
-                    <span className="text-gray-500">{attendanceEmployees} trabajadores</span>
-                    <span className="font-semibold text-[#101d69]">S/. {formatMoney(Number(attendancePricing.employeeUnitPrice) * attendanceEmployees)}</span>
-                  </div>
-                  <div className="flex justify-between gap-4 text-sm">
-                    <span className="text-gray-500">{attendanceQrPoints} puntos QR</span>
-                    <span className="font-semibold text-[#101d69]">S/. {formatMoney(Number(attendancePricing.qrPointUnitPrice) * attendanceQrPoints)}</span>
-                  </div>
-                  {isAnnual && Number(attendancePricing.annualDiscountPercent) > 0 && (
-                    <div className="flex justify-between gap-4 border-t border-gray-200 pt-3 text-sm">
-                      <span className="text-gray-500">Descuento anual</span>
-                      <span className="font-semibold text-[#101d69]">-{attendancePricing.annualDiscountPercent}%</span>
-                    </div>
-                  )}
-                  {attendanceAffiliateDiscountPercent > 0 && (
-                    <div className="flex justify-between gap-4 border-t border-gray-200 pt-3 text-sm">
-                      <span className="text-gray-500">Descuento afiliado</span>
-                      <span className="font-semibold text-[#101d69]">-S/. {formatMoney(attendanceAffiliateDiscountAmount)}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <a
-                href={`https://wa.me/51923328058?text=${encodeURIComponent(attendanceMessage(attendanceTotal, isAnnual, activeAffiliate))}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-[#22c55e] px-4 py-3 text-center font-bold text-white shadow-sm transition hover:bg-[#16a34a]"
-              >
-                <WhatsappLogo size={17} weight="bold" />
-                Solicitar por WhatsApp
-              </a>
-            </motion.div>
-            </div>
-          </motion.div>
-        )}
 
         <motion.div
           className="mt-12 text-center md:mt-16"
@@ -750,6 +539,11 @@ function featureItems(plan: PlanDefinition) {
       included: keys.has('gre-remitente') && keys.has('conductores'),
     },
     {
+      label: 'Enlaces de envÃ­os',
+      included: keys.has('envios-config'),
+      isNew: true,
+    },
+    {
       label: plan.code === 'empresarial' ? 'Soporte prioritario' : 'Soporte estandar',
       included: true,
     },
@@ -758,7 +552,7 @@ function featureItems(plan: PlanDefinition) {
 
 function planDescription(plan: PlanDefinition) {
   const descriptions: Record<PlanCode, string> = {
-    prueba: `${plan.trialDays ?? 14} dias para probar Nuvex`,
+    prueba: `${plan.trialDays ?? 14} días para probar Nuvex`,
     basico: 'Para vender y controlar lo esencial',
     impulsa: 'Para vender, cobrar y controlar stock',
     emprendedor: 'Para tiendas que empiezan a crecer',
@@ -788,25 +582,9 @@ function planMessage(
       }% de descuento.`
     : ''
   return `${base}
-${affiliateText}¿Podrian ayudarme a activarlo?`
+${affiliateText}Â¿Podrian ayudarme a activarlo?`
 }
 
-function attendanceMessage(
-  total: number,
-  isAnnual: boolean,
-  affiliate: Extract<AffiliateCodeResponse, { valid: true }> | null,
-) {
-  const base = `Hola, deseo contratar el modulo de Asistencias${isAnnual ? ' anual' : ''} por S/. ${formatMoney(
-    total,
-  )}.`
-  const affiliateText = affiliate
-    ? ` Estoy usando el codigo de afiliado ${affiliate.code} con ${
-        affiliate.discountPercent
-      }% de descuento.`
-    : ''
-  return `${base}
-${affiliateText}¿Podrian ayudarme a activarlo?`
-}
 
 function getPlanPrice(
   plan: PlanDefinition,
@@ -816,7 +594,7 @@ function getPlanPrice(
   if (plan.code === 'prueba') {
     return {
       free: true,
-      label: plan.trialDays ? `${plan.trialDays} dias gratis` : 'Gratis',
+      label: plan.trialDays ? `${plan.trialDays} días gratis` : 'Gratis',
       previous: 0,
       current: 0,
       discountPercent: '0.00',
@@ -875,7 +653,15 @@ function PlanDetail({
   )
 }
 
-function PlanFeature({ label, included }: { label: string; included: boolean }) {
+function PlanFeature({
+  label,
+  included,
+  isNew,
+}: {
+  label: string
+  included: boolean
+  isNew?: boolean
+}) {
   const IconComponent = included ? CheckCircle : XCircle
 
   return (
@@ -885,7 +671,14 @@ function PlanFeature({ label, included }: { label: string; included: boolean }) 
         weight="fill"
         className={included ? 'shrink-0 text-emerald-500' : 'shrink-0 text-gray-300'}
       />
-      <span>{label}</span>
+      <span className="flex flex-wrap items-center gap-1.5">
+        {label}
+        {isNew ? (
+          <span className="rounded-full bg-orange-500 px-1.5 py-0.5 text-[8px] font-black uppercase leading-none text-white">
+            Nuevo
+          </span>
+        ) : null}
+      </span>
     </div>
   )
 }

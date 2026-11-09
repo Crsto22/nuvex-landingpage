@@ -61,20 +61,6 @@ export type AffiliateCodeResponse =
       reason: 'invalid' | 'inactive'
     }
 
-export type AttendancePricing = {
-  employeeUnitPrice: string
-  qrPointUnitPrice: string
-  annualDiscountPercent: string
-  currency: 'PEN'
-  includesIgv: true
-  updatedAt: string
-  updatedBy?: {
-    id: string
-    name: string
-    email: string
-  } | null
-}
-
 export async function apiRequest<T>(path: string): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`)
   const body = await response.json().catch(() => null)

@@ -26,7 +26,6 @@ export default function Header() {
 
   const navLinks = [
     { label: 'Inicio', href: '/' },
-    { label: 'Asistencias', href: '/#asistencias' },
     { label: 'Planes', href: '/#planes' },
     { label: 'Sistemas a medida', href: '/#sistemas' },
     { label: 'Preguntas', href: '/#preguntas' },

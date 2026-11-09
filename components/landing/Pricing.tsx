@@ -539,7 +539,7 @@ function featureItems(plan: PlanDefinition) {
       included: keys.has('gre-remitente') && keys.has('conductores'),
     },
     {
-      label: 'Enlaces de envÃ­os',
+      label: 'Enlace de Envíos',
       included: keys.has('envios-config'),
       isNew: true,
     },

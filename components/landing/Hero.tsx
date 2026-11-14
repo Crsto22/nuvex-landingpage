@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
@@ -65,7 +65,7 @@ export default function Hero() {
                   className="text-sm md:text-base text-gray-600 leading-relaxed"
                   variants={itemVariants}
                 >
-                  La plataforma para gestionar tiendas de ropa, calzado, accesorios y mÃ¡s. Controla tus ventas, inventario, caja y facturaciÃ³n desde un solo lugar.
+                  La plataforma para gestionar tiendas de ropa, calzado, accesorios y más. Controla tus ventas, inventario, caja y facturación desde un solo lugar.
                 </motion.p>
 
                 <motion.div className="flex flex-col sm:flex-row gap-4 w-full" variants={itemVariants}>

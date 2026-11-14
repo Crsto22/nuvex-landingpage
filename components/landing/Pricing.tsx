@@ -582,7 +582,7 @@ function planMessage(
       }% de descuento.`
     : ''
   return `${base}
-${affiliateText}Â¿Podrian ayudarme a activarlo?`
+${affiliateText}¿Podrian ayudarme a activarlo?`
 }
 
 

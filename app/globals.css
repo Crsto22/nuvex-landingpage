@@ -3,15 +3,77 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* TODO: IMPORTAR FUENTES PROXIMA NOVA */
-/* Reemplaza 'font-sans' en tailwind.config.ts cuando tengas las fuentes */
+@font-face {
+  font-family: 'Onest';
+  src: url('/font/Onest-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
-/* Custom fonts imported via next/font/google in layout.tsx */
+@font-face {
+  font-family: 'Lato';
+  src: url('/font/Lato-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/font/Lato-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/font/Lato-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/font/Lato-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/font/GeistMono-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lora';
+  src: url('/font/Lora-Variable.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* Nuvex Color System */
   --primary-nuvex: #101d69;
   --secondary-nuvex: #fd741a;
+
+  /* Tipografias (mismas que la app Nuvex) */
+  --font-onest: 'Onest', system-ui, -apple-system, sans-serif;
+  --font-lato: 'Lato', system-ui, -apple-system, sans-serif;
+  --font-geist-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+  --font-lora: 'Lora', Georgia, serif;
+  --font-primary: var(--font-onest);
+  --font-heading-primary: var(--font-onest);
+  --font-description: var(--font-lato);
+  --font-code: var(--font-geist-mono);
   
   --background: #ffffff;
   --foreground: #1a1a1a;
@@ -84,8 +146,9 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-sora), var(--font-jakarta), sans-serif;
-  --font-mono: var(--font-jetbrains), monospace;
+  --font-sans: var(--font-onest), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-lora), Georgia, serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

@@ -1,40 +1,7 @@
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
 import { Analytics } from '@vercel/analytics/next'
 import FacebookPixel from '@/components/analytics/facebook-pixel'
 import './globals.css'
-
-const sora = localFont({
-  src: [
-    { path: '../public/fonts/Sora-Light.ttf', weight: '300', style: 'normal' },
-    { path: '../public/fonts/Sora-Regular.ttf', weight: '400', style: 'normal' },
-    { path: '../public/fonts/Sora-Medium.ttf', weight: '500', style: 'normal' },
-    { path: '../public/fonts/Sora-SemiBold.ttf', weight: '600', style: 'normal' },
-    { path: '../public/fonts/Sora-Bold.ttf', weight: '700', style: 'normal' },
-    { path: '../public/fonts/Sora-ExtraBold.ttf', weight: '800', style: 'normal' },
-  ],
-  variable: '--font-sora'
-});
-
-const plusJakartaSans = localFont({
-  src: [
-    { path: '../public/fonts/PlusJakartaSans-Light.ttf', weight: '300', style: 'normal' },
-    { path: '../public/fonts/PlusJakartaSans-Regular.ttf', weight: '400', style: 'normal' },
-    { path: '../public/fonts/PlusJakartaSans-Medium.ttf', weight: '500', style: 'normal' },
-    { path: '../public/fonts/PlusJakartaSans-SemiBold.ttf', weight: '600', style: 'normal' },
-    { path: '../public/fonts/PlusJakartaSans-Bold.ttf', weight: '700', style: 'normal' },
-    { path: '../public/fonts/PlusJakartaSans-ExtraBold.ttf', weight: '800', style: 'normal' },
-  ],
-  variable: '--font-jakarta'
-});
-
-const jetbrainsMono = localFont({
-  src: [
-    { path: '../public/fonts/JetBrainsMono-Regular.ttf', weight: '400', style: 'normal' },
-    { path: '../public/fonts/JetBrainsMono-Bold.ttf', weight: '700', style: 'normal' },
-  ],
-  variable: '--font-jetbrains'
-});
 
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nuvex.pe').replace(/\/$/, '')
 
@@ -162,7 +129,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className="bg-white">
-      <body className={`${sora.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} font-sans antialiased bg-white`}>
+      <body className="font-sans antialiased bg-white">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

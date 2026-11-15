@@ -4,6 +4,7 @@ import FacebookPixel from '@/components/analytics/facebook-pixel'
 import JsonLd from '@/components/seo/json-ld'
 import {
   absoluteUrl,
+  appUrl,
   company,
   logoImage,
   mainNav,
@@ -18,6 +19,7 @@ import './globals.css'
 const organizationId = `${siteUrl}/#organization`
 const websiteId = `${siteUrl}/#website`
 const softwareId = `${siteUrl}/#software`
+const webAppId = `${appUrl}/#webapp`
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -119,6 +121,7 @@ const jsonLd = {
         '@type': 'Country',
         name: company.address.countryName,
       },
+      owns: { '@id': webAppId },
       sameAs: [...company.social],
     },
     {
@@ -150,6 +153,7 @@ const jsonLd = {
         'Enlace de envíos para clientes',
       ],
       screenshot: absoluteUrl('/kiments-erp.webp'),
+      installUrl: `${appUrl}/register`,
       offers: {
         '@type': 'AggregateOffer',
         priceCurrency: 'PEN',
@@ -186,6 +190,30 @@ const jsonLd = {
           },
         },
       ],
+    },
+    {
+      '@type': 'WebApplication',
+      '@id': webAppId,
+      name: 'Nuvex App',
+      alternateName: 'Nuvex POS',
+      url: appUrl,
+      applicationCategory: 'BusinessApplication',
+      applicationSubCategory: 'POS y facturación electrónica',
+      operatingSystem: 'Web',
+      browserRequirements: 'Requiere JavaScript habilitado',
+      inLanguage: 'es-PE',
+      isAccessibleForFree: false,
+      publisher: { '@id': organizationId },
+      isPartOf: { '@id': websiteId },
+      offers: {
+        '@type': 'AggregateOffer',
+        priceCurrency: 'PEN',
+        lowPrice: '19.00',
+        highPrice: '99.00',
+        offerCount: 6,
+        availability: 'https://schema.org/InStock',
+        url: absoluteUrl('/precios'),
+      },
     },
     {
       '@type': 'ItemList',

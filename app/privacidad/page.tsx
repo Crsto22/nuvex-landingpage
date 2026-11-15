@@ -13,7 +13,7 @@ const updatedAt = '9 de noviembre de 2026'
 export default function PrivacidadPage() {
   return (
     <main className="w-full bg-white">
-      <Header />
+      <Header solid />
       <section className="bg-[#101d69] px-4 pb-20 pt-32">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">Política de Privacidad</h1>
@@ -21,7 +21,7 @@ export default function PrivacidadPage() {
         </div>
       </section>
 
-      <article className="prose prose-lg mx-auto max-w-4xl px-4 py-16 text-gray-700 md:py-24">
+      <article className="rich-text mx-auto max-w-4xl px-4 py-16 md:py-24">
         <p className="lead text-xl text-gray-600">
           Esta Política explica cómo Nuvex trata los datos personales obtenidos a través de su sitio web y plataforma. Está
           elaborada de acuerdo con la Ley N.° 29733, Ley de Protección de Datos Personales, y su Reglamento aprobado por el

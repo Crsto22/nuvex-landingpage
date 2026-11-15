@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import {
   ArrowRight,
@@ -182,6 +183,13 @@ export default function CustomSystems() {
                 </DialogContent>
               </Dialog>
             </div>
+
+            <Link
+              href="/sistemas-a-medida"
+              className="mt-5 inline-block text-sm font-semibold text-[#101d69] underline underline-offset-4 transition-colors hover:text-[#fd741a]"
+            >
+              Ver más sobre sistemas a medida
+            </Link>
           </motion.div>
         </div>
       </div>

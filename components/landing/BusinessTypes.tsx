@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 
 const rubros = [
@@ -66,6 +67,13 @@ export default function BusinessTypes() {
           <h2 className="text-3xl font-bold leading-tight text-[#101d69] md:text-4xl lg:text-5xl">
             Hecho para tu tipo de <span className="text-[#fd741a]">negocio</span>
           </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-gray-600 md:text-base">
+            Ropa, calzado, carteras, mochilas y bodegas: el mismo{' '}
+            <Link href="/sistema-pos" className="font-semibold text-[#101d69] underline underline-offset-2 hover:text-[#fd741a]">
+              sistema POS
+            </Link>{' '}
+            se adapta a tu forma de vender, con variantes por talla y color.
+          </p>
         </motion.div>
 
         <motion.div

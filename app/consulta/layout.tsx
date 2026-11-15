@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ogImage } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Consulta de Comprobantes Electrónicos (CPE)',
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
     description:
       'Consulta y descarga tus comprobantes electrónicos en PDF, XML y CDR ingresando el RUC, tipo, serie, correlativo, fecha e importe.',
     url: '/consulta',
+    images: [ogImage],
   },
   robots: {
     index: true,

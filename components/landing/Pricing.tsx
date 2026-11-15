@@ -26,10 +26,14 @@ import {
   apiRequest,
 } from '@/lib/api'
 
-export default function Pricing() {
+export default function Pricing({
+  initialPlans = [],
+}: {
+  initialPlans?: PlanDefinition[]
+}) {
   const [isAnnual, setIsAnnual] = useState(false)
-  const [plans, setPlans] = useState<PlanDefinition[]>([])
-  const [loadingPlans, setLoadingPlans] = useState(true)
+  const [plans, setPlans] = useState<PlanDefinition[]>(initialPlans)
+  const [loadingPlans, setLoadingPlans] = useState(initialPlans.length === 0)
   const [plansError, setPlansError] = useState('')
   const [affiliateCode, setAffiliateCode] = useState('')
   const [affiliate, setAffiliate] = useState<AffiliateCodeResponse | null>(null)
@@ -38,6 +42,9 @@ export default function Pricing() {
   const [hasOverflow, setHasOverflow] = useState(false)
 
   useEffect(() => {
+    // Si el servidor ya envió los planes, no hace falta pedirlos otra vez.
+    if (initialPlans.length > 0) return
+
     let active = true
 
     apiRequest<PlanDefinition[]>('/plans')
@@ -57,7 +64,7 @@ export default function Pricing() {
     return () => {
       active = false
     }
-  }, [])
+  }, [initialPlans.length])
 
   const highlightedCode = useMemo(() => getHighlightedCode(plans), [plans])
   const posPlans = useMemo(() => plans.filter((plan) => plan.code !== 'prueba'), [plans])
@@ -186,6 +193,10 @@ export default function Pricing() {
             Elige el plan perfecto{' '}
             <span className="text-[#fd741a]">para tu tienda</span>
           </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-gray-600 md:text-base">
+            Planes desde S/ 19 al mes, sin costo de instalación y con 14 días de
+            prueba gratis. Puedes cambiar de plan cuando quieras.
+          </p>
         </motion.div>
 
         <div className="mb-12 flex flex-col gap-4 md:mb-20 lg:grid lg:grid-cols-3 lg:items-center">
@@ -198,12 +209,12 @@ export default function Pricing() {
                 type="text"
                 value={affiliateCode}
                 onChange={(event) => setAffiliateCode(event.target.value)}
-                placeholder="Codigo de afiliado"
+                placeholder="Código de afiliado"
                 className="min-h-12 flex-1 rounded-l-full rounded-r-none border border-gray-200 bg-gray-50 px-4 text-sm font-semibold uppercase text-[#101d69] outline-none transition focus:border-[#101d69] focus:ring-2 focus:ring-[#101d69]/15"
               />
               <button
                 type="submit"
-                aria-label="Buscar codigo de afiliado"
+                aria-label="Buscar código de afiliado"
                 disabled={validatingAffiliate || !affiliateCode.trim()}
                 className="flex min-h-12 items-center justify-center rounded-l-none rounded-r-full bg-[#101d69] px-4 text-white transition hover:bg-[#0d1650] disabled:cursor-not-allowed disabled:opacity-60"
               >
@@ -294,7 +305,7 @@ export default function Pricing() {
                 >
                   {highlighted && (
                     <div className="absolute -top-3 left-1/2 z-20 -translate-x-1/2 rounded-full bg-[#101d69] px-4 py-1 text-xs font-extrabold text-white shadow-lg">
-                      Mas popular
+                      Más popular
                     </div>
                   )}
 
@@ -323,7 +334,7 @@ export default function Pricing() {
                         </span>
                         {!price.free && (
                           <span className="text-xs font-semibold text-[#101d69]/80">
-                            {isAnnual ? '/anio' : '/mes'}
+                            {isAnnual ? '/año' : '/mes'}
                           </span>
                         )}
                       </div>
@@ -431,7 +442,7 @@ export default function Pricing() {
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           <p className="text-base text-gray-600">
-            Preguntas?{' '}
+            ¿Preguntas?{' '}
             <a href="#contacto" className="font-semibold text-[#101d69] hover:underline">
               Contacta con nosotros
             </a>
@@ -499,7 +510,7 @@ function featureItems(plan: PlanDefinition) {
   const keys = new Set(plan.moduleKeys)
   return [
     {
-      label: 'Facturacion electronica',
+      label: 'Facturación electrónica',
       included: keys.has('comprobantes'),
     },
     {
@@ -515,11 +526,11 @@ function featureItems(plan: PlanDefinition) {
       included: keys.has('cotizaciones') && keys.has('clientes'),
     },
     {
-      label: 'Catalogo, stock y Kardex',
+      label: 'Catálogo, stock y Kardex',
       included: keys.has('productos') && keys.has('stock-kardex'),
     },
     {
-      label: 'Administracion de usuarios',
+      label: 'Administración de usuarios',
       included: keys.has('usuarios'),
     },
     {
@@ -544,7 +555,7 @@ function featureItems(plan: PlanDefinition) {
       isNew: true,
     },
     {
-      label: plan.code === 'empresarial' ? 'Soporte prioritario' : 'Soporte estandar',
+      label: plan.code === 'empresarial' ? 'Soporte prioritario' : 'Soporte estándar',
       included: true,
     },
   ]
@@ -556,12 +567,12 @@ function planDescription(plan: PlanDefinition) {
     basico: 'Para vender y controlar lo esencial',
     impulsa: 'Para vender, cobrar y controlar stock',
     emprendedor: 'Para tiendas que empiezan a crecer',
-    crecimiento: 'La opcion mas completa para operar',
-    empresarial: 'Para operaciones con mas volumen',
+    crecimiento: 'La opción más completa para operar',
+    empresarial: 'Para operaciones con más volumen',
     pos_basico: 'POS e inventario sin asistencias',
-    asistencias_basico: 'Asistencias para equipos pequenos',
+    asistencias_basico: 'Asistencias para equipos pequeños',
     asistencias_pro: 'Asistencias para equipos en crecimiento',
-    completo_emprende: 'POS y asistencias para negocios pequenos',
+    completo_emprende: 'POS y asistencias para negocios pequeños',
     completo_empresa: 'POS y asistencias completo',
   }
 
@@ -582,7 +593,7 @@ function planMessage(
       }% de descuento.`
     : ''
   return `${base}
-${affiliateText}¿Podrian ayudarme a activarlo?`
+${affiliateText}¿Podrían ayudarme a activarlo?`
 }
 
 
@@ -621,7 +632,7 @@ function affiliateMessage(affiliate: AffiliateCodeResponse | null) {
   if (affiliate.valid) {
     return (
       <p className="mt-3 text-sm font-semibold text-emerald-700">
-        Codigo {affiliate.code} aplicado: {affiliate.discountPercent}% de descuento.
+        Código {affiliate.code} aplicado: {affiliate.discountPercent}% de descuento.
       </p>
     )
   }
@@ -629,8 +640,8 @@ function affiliateMessage(affiliate: AffiliateCodeResponse | null) {
   return (
     <p className="mt-3 text-sm font-semibold text-red-600">
       {affiliate.reason === 'inactive'
-        ? 'Este codigo no esta disponible.'
-        : 'Codigo de afiliado no valido.'}
+        ? 'Este código no está disponible.'
+        : 'Código de afiliado no válido.'}
     </p>
   )
 }
@@ -687,13 +698,19 @@ function roundMoney(value: number) {
   return Math.round(value * 100) / 100
 }
 
+/**
+ * Formato determinista (servidor y navegador producen el mismo texto) para
+ * evitar diferencias de hidratación por ICU/CLDR.
+ */
+function groupThousands(value: string) {
+  return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
 function formatMoney(value: number) {
-  return value.toLocaleString('es-PE', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })
+  const [integer, decimals] = value.toFixed(2).split('.')
+  return `${groupThousands(integer)}.${decimals}`
 }
 
 function formatLimit(value: number | null) {
-  return value === null ? 'Ilimitados' : value.toLocaleString('es-PE')
+  return value === null ? 'Ilimitados' : groupThousands(String(value))
 }

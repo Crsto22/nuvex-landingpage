@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { CalendarBlank } from 'phosphor-react'
 import Header from '@/components/landing/Header'
@@ -115,7 +116,7 @@ export default function ConsultaCPE() {
             <div className="hidden md:flex justify-center">
               <img
                 src="/iconos/comprobantes.png"
-                alt="Comprobantes"
+                alt="Consulta de comprobantes electrónicos PDF, XML y CDR"
                 className="w-full max-w-md h-auto object-contain"
               />
             </div>
@@ -123,8 +124,12 @@ export default function ConsultaCPE() {
             <div>
               <div className="text-center mb-8">
                 <h1 className="text-3xl md:text-4xl font-extrabold text-[#101d69] tracking-tight">
-                  Consulta <span className="text-[#fd741a]">CPE</span>
+                  Consulta de comprobantes <span className="text-[#fd741a]">electrónicos</span>
                 </h1>
+                <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-gray-600">
+                  Verifica y descarga tu factura, boleta o nota en PDF, XML y CDR
+                  con el RUC, la serie, el correlativo, la fecha y el importe.
+                </p>
               </div>
 
               {loading ? (
@@ -318,6 +323,49 @@ export default function ConsultaCPE() {
           </div>
         </motion.div>
       </div>
+
+      <section className="bg-white py-14 md:py-20">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="rich-text">
+            <h2>¿Qué puedes hacer en esta página?</h2>
+            <p>
+              Con la consulta de comprobantes electrónicos de Nuvex puedes
+              verificar el estado de una factura, boleta, nota de crédito, nota de
+              débito o guía de remisión emitida ante SUNAT, y descargar sus
+              archivos.
+            </p>
+            <ul>
+              <li>
+                <strong>PDF:</strong> la representación impresa del comprobante,
+                lista para enviar al cliente.
+              </li>
+              <li>
+                <strong>XML:</strong> el archivo tributario que se envía a SUNAT,
+                necesario para tu contabilidad.
+              </li>
+              <li>
+                <strong>CDR:</strong> la constancia de recepción que acredita que
+                SUNAT aceptó el comprobante.
+              </li>
+            </ul>
+            <h2>¿Qué datos necesitas?</h2>
+            <p>
+              El RUC del emisor, el tipo de comprobante, la serie, el correlativo,
+              la fecha de emisión y el importe total. Todos esos datos aparecen en
+              el PDF que recibiste o en el resumen de la venta.
+            </p>
+            <h2>¿Aún no emites comprobantes electrónicos?</h2>
+            <p>
+              Nuvex emite boletas, facturas y notas conectadas a SUNAT desde el
+              mismo POS, con envío automático y descarga de PDF, XML y CDR. Revisa{' '}
+              <Link href="/facturacion-electronica">
+                facturación electrónica SUNAT
+              </Link>{' '}
+              y los <Link href="/precios">planes desde S/ 19 al mes</Link>.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <Footer />
       <FloatingButtons />

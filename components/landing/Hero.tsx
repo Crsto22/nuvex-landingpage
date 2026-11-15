@@ -57,15 +57,17 @@ export default function Hero() {
                   className="text-[1.75rem] md:text-[2.1rem] lg:text-[2.6rem] font-extrabold text-[#101d69] leading-tight"
                   variants={itemVariants}
                 >
-                  Impulsa tu negocio desde{' '}
-                  <span className="text-[#fd741a]">una sola plataforma</span>
+                  Facturación electrónica SUNAT y{' '}
+                  <span className="text-[#fd741a]">POS en la nube</span> para tu negocio
                 </motion.h1>
 
                 <motion.p
                   className="text-sm md:text-base text-gray-600 leading-relaxed"
                   variants={itemVariants}
                 >
-                  La plataforma para gestionar tiendas de ropa, calzado, accesorios y más. Controla tus ventas, inventario, caja y facturación desde un solo lugar.
+                  Emite boletas y facturas a SUNAT, controla tu inventario, tu caja y
+                  tus ventas desde un solo lugar. Hecho para tiendas de ropa, calzado,
+                  accesorios y bodegas en Perú.
                 </motion.p>
 
                 <motion.div className="flex flex-col sm:flex-row gap-4 w-full" variants={itemVariants}>
@@ -93,7 +95,7 @@ export default function Hero() {
                   >
                     <Image
                       src="/fondos/laptop.webp"
-                      alt="POS en laptop"
+                      alt="Sistema POS en la nube de Nuvex en una laptop"
                       width={1200}
                       height={800}
                       sizes="(max-width: 1024px) 100vw, 500px"
@@ -111,7 +113,7 @@ export default function Hero() {
                   >
                     <Image
                       src="/fondos/celular.webp"
-                      alt="POS en celular"
+                      alt="POS de Nuvex funcionando en un celular"
                       width={533}
                       height={800}
                       sizes="(max-width: 1024px) 28vw, 150px"
@@ -129,7 +131,7 @@ export default function Hero() {
                     >
                       <Image
                         src={productImages[productImageIndex]}
-                        alt="Producto en venta"
+                        alt="Producto con variantes listo para vender en Nuvex"
                         width={800}
                         height={800}
                         sizes="(max-width: 1024px) 44vw, 230px"

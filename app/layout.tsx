@@ -1,41 +1,51 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import FacebookPixel from '@/components/analytics/facebook-pixel'
+import JsonLd from '@/components/seo/json-ld'
+import {
+  absoluteUrl,
+  company,
+  logoImage,
+  mainNav,
+  secondaryNav,
+  siteDescription,
+  siteName,
+  siteTitle,
+  siteUrl,
+} from '@/lib/site'
 import './globals.css'
 
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nuvex.pe').replace(/\/$/, '')
-
-const siteTitle = 'Nuvex | POS en la Nube y Sistema de Ventas para Negocios'
-const siteDescription =
-  'Nuvex es el POS en la nube y sistema de ventas para negocios y tiendas: vende rápido, controla tu inventario, emite comprobantes electrónicos a SUNAT y cuadra tu caja desde un solo lugar.'
+const organizationId = `${siteUrl}/#organization`
+const websiteId = `${siteUrl}/#website`
+const softwareId = `${siteUrl}/#software`
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: siteTitle,
-    template: '%s | Nuvex',
+    template: `%s | ${siteName}`,
   },
   description: siteDescription,
   keywords: [
-    'POS',
+    'facturación electrónica',
+    'facturación electrónica SUNAT',
+    'comprobantes electrónicos',
+    'boleta electrónica',
+    'factura electrónica Perú',
+    'sistema POS',
+    'POS en la nube',
     'punto de venta',
     'sistema de ventas',
-    'software para negocios',
     'software para tiendas',
-    'inventario',
     'control de inventario',
-    'facturación electrónica',
-    'comprobantes electrónicos',
-    'SUNAT',
     'control de caja',
     'SaaS Perú',
     'Nuvex',
   ],
-  applicationName: 'Nuvex',
-  authors: [{ name: 'Nuvex', url: siteUrl }],
-  creator: 'Nuvex',
-  publisher: 'Nuvex',
-  generator: 'Next.js',
+  applicationName: siteName,
+  authors: [{ name: siteName, url: siteUrl }],
+  creator: siteName,
+  publisher: company.legalName,
   category: 'business',
   alternates: {
     canonical: '/',
@@ -55,31 +65,28 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'es_PE',
     url: siteUrl,
-    siteName: 'Nuvex',
+    siteName,
     title: siteTitle,
     description: siteDescription,
-    images: [
-      {
-        url: '/logopng.webp',
-        width: 900,
-        height: 300,
-        alt: 'Nuvex - POS en la nube para negocios y tiendas',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: siteTitle,
     description: siteDescription,
-    images: ['/logopng.webp'],
   },
   icons: {
-    icon: [
-      { url: '/Norvitex.ico' },
-      { url: '/Norvitex.png', type: 'image/png' },
-    ],
+    icon: [{ url: '/Norvitex.ico' }, { url: '/Norvitex.png', type: 'image/png' }],
     apple: '/Norvitex.png',
   },
+  other: {
+    'geo.region': 'PE-LIM',
+    'geo.placename': 'Lima',
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#101d69',
+  colorScheme: 'light',
 }
 
 const jsonLd = {
@@ -87,37 +94,108 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'Organization',
-      '@id': `${siteUrl}/#organization`,
-      name: 'Nuvex',
+      '@id': organizationId,
+      name: siteName,
+      legalName: company.legalName,
+      taxID: company.ruc,
       url: siteUrl,
-      logo: `${siteUrl}/logopng.webp`,
-      sameAs: [
-        'https://www.instagram.com/nuvexpe/',
-        'https://www.tiktok.com/@nuvexpe',
-      ],
+      logo: {
+        '@type': 'ImageObject',
+        url: logoImage,
+        width: 844,
+        height: 797,
+      },
+      image: logoImage,
+      email: company.email,
+      telephone: company.phone,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: company.address.street,
+        addressLocality: company.address.district,
+        addressRegion: company.address.region,
+        addressCountry: company.address.country,
+      },
+      areaServed: {
+        '@type': 'Country',
+        name: company.address.countryName,
+      },
+      sameAs: [...company.social],
     },
     {
       '@type': 'WebSite',
-      '@id': `${siteUrl}/#website`,
+      '@id': websiteId,
       url: siteUrl,
-      name: 'Nuvex',
+      name: siteName,
       inLanguage: 'es-PE',
-      publisher: { '@id': `${siteUrl}/#organization` },
+      publisher: { '@id': organizationId },
     },
     {
       '@type': 'SoftwareApplication',
-      name: 'Nuvex',
+      '@id': softwareId,
+      name: siteName,
       applicationCategory: 'BusinessApplication',
-      operatingSystem: 'Web',
+      applicationSubCategory: 'POS y facturación electrónica',
+      operatingSystem: 'Web, Android, iOS',
       url: siteUrl,
       description: siteDescription,
+      inLanguage: 'es-PE',
+      featureList: [
+        'Facturación electrónica SUNAT',
+        'Punto de venta (POS)',
+        'Control de inventario y kardex',
+        'Variantes por talla y color',
+        'Control de caja',
+        'Multiples sucursales y almacenes',
+        'Reportes de ventas',
+        'Enlace de envíos para clientes',
+      ],
+      screenshot: absoluteUrl('/kiments-erp.webp'),
       offers: {
-        '@type': 'Offer',
-        price: '0',
+        '@type': 'AggregateOffer',
         priceCurrency: 'PEN',
-        description: 'Prueba gratis de 14 días',
+        lowPrice: '19.00',
+        highPrice: '99.00',
+        offerCount: 6,
+        availability: 'https://schema.org/InStock',
+        url: absoluteUrl('/precios'),
       },
-      publisher: { '@id': `${siteUrl}/#organization` },
+      publisher: { '@id': organizationId },
+      potentialAction: [
+        {
+          '@type': 'RegisterAction',
+          name: 'Prueba gratis 14 días',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: 'https://app.nuvex.pe/register',
+            actionPlatform: [
+              'https://schema.org/DesktopWebPlatform',
+              'https://schema.org/MobileWebPlatform',
+            ],
+          },
+        },
+        {
+          '@type': 'LoginAction',
+          name: 'Ingresar a Nuvex',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: 'https://app.nuvex.pe/login',
+            actionPlatform: [
+              'https://schema.org/DesktopWebPlatform',
+              'https://schema.org/MobileWebPlatform',
+            ],
+          },
+        },
+      ],
+    },
+    {
+      '@type': 'ItemList',
+      '@id': `${siteUrl}/#sitelinks`,
+      itemListElement: [...mainNav, ...secondaryNav].map((item, index) => ({
+        '@type': 'SiteNavigationElement',
+        position: index + 1,
+        name: item.name,
+        url: absoluteUrl(item.href),
+      })),
     },
   ],
 }
@@ -128,12 +206,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className="bg-white">
+    <html lang="es-PE" className="bg-white">
       <body className="font-sans antialiased bg-white">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd data={jsonLd} />
         {children}
         {process.env.NODE_ENV === 'production' && (
           <>

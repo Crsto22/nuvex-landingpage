@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { List, SignIn } from 'phosphor-react'
+import { loginUrl, mainNav, registerUrl } from '@/lib/site'
 import {
   Sheet,
   SheetContent,
@@ -12,7 +13,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 
-export default function Header() {
+export default function Header({ solid = false }: { solid?: boolean }) {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
@@ -24,18 +25,13 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navLinks = [
-    { label: 'Inicio', href: '/' },
-    { label: 'Planes', href: '/#planes' },
-    { label: 'Sistemas a medida', href: '/#sistemas' },
-    { label: 'Preguntas', href: '/#preguntas' },
-  ]
+  const isSolid = solid || isScrolled
 
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white shadow-sm' : 'bg-transparent'
+          isSolid ? 'bg-white shadow-sm' : 'bg-transparent'
         }`}
       >
         <div className="w-full px-12 sm:px-16 lg:px-24">
@@ -53,8 +49,8 @@ export default function Header() {
             </Link>
 
             {/* Desktop Menu */}
-            <nav className="hidden lg:flex items-center gap-5 xl:gap-8">
-              {navLinks.map((link) => (
+            <nav aria-label="Menú principal" className="hidden lg:flex items-center gap-5 xl:gap-8">
+              {mainNav.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -69,14 +65,14 @@ export default function Header() {
             {/* Desktop Buttons */}
             <div className="hidden lg:flex items-center gap-2 xl:gap-3">
               <a
-                href="https://app.nuvex.pe"
+                href={loginUrl}
                 className="px-3 xl:px-4 py-2 text-sm font-semibold text-[#101d69] bg-transparent border border-[#101d69] rounded-full hover:bg-[#101d69] hover:text-white transition-all whitespace-nowrap flex items-center gap-1.5"
               >
                 <SignIn size={16} weight="bold" />
                 Ingresar
               </a>
               <a
-                href="https://app.nuvex.pe/register"
+                href={registerUrl}
                 className="px-3 xl:px-4 py-2 text-sm font-semibold text-white bg-[#101d69] rounded-full hover:bg-[#0d1650] transition-all whitespace-nowrap"
               >
                 Registrarme
@@ -109,29 +105,50 @@ export default function Header() {
                   </SheetTitle>
                 </SheetHeader>
 
-                <nav className="flex flex-col gap-1 px-3 py-4">
-                  {navLinks.map((link) => (
+                <nav aria-label="Menú móvil" className="flex flex-col gap-1 px-3 py-4">
+                  <Link
+                    href="/"
+                    className="block text-base font-medium text-gray-700 hover:text-[#101d69] py-3 px-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Inicio
+                  </Link>
+                  {mainNav.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
                       className="block text-base font-medium text-gray-700 hover:text-[#101d69] py-3 px-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors"
                       onClick={() => setIsOpen(false)}
                     >
-                      {link.label}
+                      {link.name}
                     </Link>
                   ))}
+                  <Link
+                    href="/sistemas-a-medida"
+                    className="block text-base font-medium text-gray-700 hover:text-[#101d69] py-3 px-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Sistemas a medida
+                  </Link>
+                  <Link
+                    href="/consulta"
+                    className="block text-base font-medium text-gray-700 hover:text-[#101d69] py-3 px-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Consulta de comprobantes
+                  </Link>
                 </nav>
 
                 <div className="mt-auto flex flex-col gap-3 border-t border-gray-100 p-5">
                   <a
-                    href="https://app.nuvex.pe"
+                    href={loginUrl}
                     className="w-full px-4 py-3 text-base font-semibold text-[#101d69] bg-transparent border border-[#101d69] rounded-full text-center active:bg-gray-50 flex items-center justify-center gap-2"
                   >
                     <SignIn size={18} weight="bold" />
                     Ingresar
                   </a>
                   <a
-                    href="https://app.nuvex.pe/register"
+                    href={registerUrl}
                     className="w-full px-4 py-3 text-base font-semibold text-white bg-[#101d69] rounded-full text-center active:bg-[#0d1650]"
                   >
                     Registrarme

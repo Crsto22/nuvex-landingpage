@@ -13,7 +13,7 @@ const updatedAt = '9 de noviembre de 2026'
 export default function TerminosPage() {
   return (
     <main className="w-full bg-white">
-      <Header />
+      <Header solid />
       <section className="bg-[#101d69] px-4 pb-20 pt-32">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">Términos y Condiciones</h1>
@@ -21,7 +21,7 @@ export default function TerminosPage() {
         </div>
       </section>
 
-      <article className="prose prose-lg mx-auto max-w-4xl px-4 py-16 text-gray-700 md:py-24">
+      <article className="rich-text mx-auto max-w-4xl px-4 py-16 md:py-24">
         <p className="lead text-xl text-gray-600">
           Estos Términos y Condiciones regulan el acceso y uso del sitio web y la plataforma Nuvex. Al crear una cuenta,
           contratar un plan o utilizar el Servicio, aceptas estos términos en representación propia o de la empresa a la que

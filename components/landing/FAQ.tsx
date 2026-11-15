@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { CaretDown } from 'phosphor-react'
 import { faqs } from '@/lib/faqs'
 
@@ -26,7 +26,7 @@ export default function FAQ() {
           >
             <Image
               src="/iconos/preguntas.webp"
-              alt="Preguntas frecuentes sobre Nuvex"
+              alt="Preguntas frecuentes sobre facturación electrónica y POS de Nuvex"
               width={640}
               height={800}
               sizes="(max-width: 1024px) 100vw, 448px"
@@ -43,8 +43,8 @@ export default function FAQ() {
               transition={{ duration: 0.6 }}
             >
               <h2 className="text-2xl font-bold leading-tight text-[#101d69] md:text-3xl lg:text-4xl [text-shadow:2px_2px_0_#ffffff,-2px_-2px_0_#ffffff,2px_-2px_0_#ffffff,-2px_2px_0_#ffffff,2px_0_0_#ffffff,-2px_0_0_#ffffff,0_2px_0_#ffffff,0_-2px_0_#ffffff]">
-                Resolvemos tus dudas{' '}
-                <span className="text-[#fd741a]">antes de empezar</span>
+                Preguntas frecuentes sobre{' '}
+                <span className="text-[#fd741a]">facturación electrónica</span> y POS
               </h2>
             </motion.div>
 
@@ -55,51 +55,65 @@ export default function FAQ() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              {faqs.map((faq, index) => (
-                <div
-                  key={index}
-                  className="rounded-3xl bg-gray-50 overflow-hidden transition-colors hover:bg-gray-100"
-                >
-                  <button
-                    onClick={() => toggle(index)}
-                    className="w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left"
-                  >
-                    <span className="text-base md:text-lg font-semibold text-gray-900 pr-4">
-                      {faq.question}
-                    </span>
-                    <motion.div
-                      animate={{ rotate: openIndex === index ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="shrink-0"
-                    >
-                      <CaretDown
-                        size={20}
-                        weight="bold"
-                        className="text-[#101d69]"
-                      />
-                    </motion.div>
-                  </button>
+              {faqs.map((faq, index) => {
+                const isOpen = openIndex === index
+                const panelId = `faq-panel-${index}`
+                const buttonId = `faq-button-${index}`
 
-                  <AnimatePresence initial={false}>
-                    {openIndex === index && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        className="overflow-hidden"
+                return (
+                  <div
+                    key={faq.question}
+                    className="rounded-3xl bg-gray-50 overflow-hidden transition-colors hover:bg-gray-100"
+                  >
+                    <h3 className="m-0 text-base md:text-lg">
+                      <button
+                        type="button"
+                        id={buttonId}
+                        aria-expanded={isOpen}
+                        aria-controls={panelId}
+                        onClick={() => toggle(index)}
+                        className="w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left"
                       >
-                        <div className="px-5 md:px-6 pb-5 md:pb-6">
-                          <div className="h-px bg-gradient-to-r from-transparent via-[#fd741a]/30 to-transparent mb-4" />
-                          <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-                            {faq.answer}
-                          </p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
+                        <span className="font-semibold text-gray-900 pr-4">
+                          {faq.question}
+                        </span>
+                        <motion.span
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="shrink-0 flex"
+                        >
+                          <CaretDown
+                            size={20}
+                            weight="bold"
+                            className="text-[#101d69]"
+                          />
+                        </motion.span>
+                      </button>
+                    </h3>
+
+                    {/* La respuesta siempre está en el HTML: Google puede leerla. */}
+                    <motion.div
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={buttonId}
+                      initial={false}
+                      animate={{
+                        height: isOpen ? 'auto' : 0,
+                        opacity: isOpen ? 1 : 0,
+                      }}
+                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-5 md:px-6 pb-5 md:pb-6">
+                        <div className="h-px bg-gradient-to-r from-transparent via-[#fd741a]/30 to-transparent mb-4" />
+                        <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </motion.div>
+                  </div>
+                )
+              })}
             </motion.div>
           </div>
         </div>

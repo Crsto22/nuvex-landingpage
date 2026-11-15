@@ -6,19 +6,25 @@ import { motion } from 'framer-motion'
 const features = [
   {
     image: '/iconos/caracteristica%20(1).webp',
-    title: 'Facturacion electronica SUNAT',
+    title: 'Facturación electrónica SUNAT',
+    description:
+      'Emite boletas, facturas y notas de crédito conectadas a SUNAT, con su PDF y XML listos para enviar al cliente.',
     card: 'bg-[#fef3c7]',
     circle: 'bg-[#fbbf24]',
   },
   {
     image: '/iconos/caracteristica%20(2).webp',
     title: 'Punto de venta (POS) e inventario',
+    description:
+      'Vende rápido con lector de código de barras y descuenta stock al instante, con variantes por talla y color.',
     card: 'bg-[#cffafe]',
     circle: 'bg-[#22d3ee]',
   },
   {
     image: '/iconos/caracteristica%20(3).webp',
-    title: 'Multiples sucursales y cajas',
+    title: 'Múltiples sucursales y cajas',
+    description:
+      'Administra tiendas, almacenes y cajeros desde una sola cuenta, con reportes de ventas consolidados.',
     card: 'bg-[#f3e8ff]',
     circle: 'bg-[#c084fc]',
   },
@@ -57,7 +63,8 @@ export default function FeaturedFeatures() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl font-bold leading-tight text-[#101d69] md:text-4xl lg:text-5xl">
-            Caracteristicas <span className="text-[#fd741a]">destacadas</span>
+            Facturación, inventario y caja{' '}
+            <span className="text-[#fd741a]">en un solo sistema</span>
           </h2>
         </motion.div>
 
@@ -88,6 +95,9 @@ export default function FeaturedFeatures() {
               <h3 className="text-xl font-bold text-[#101d69]">
                 {feature.title}
               </h3>
+              <p className="mt-3 text-sm leading-relaxed text-[#101d69]/70">
+                {feature.description}
+              </p>
             </motion.div>
           ))}
         </motion.div>

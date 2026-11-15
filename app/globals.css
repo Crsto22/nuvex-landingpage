@@ -265,3 +265,111 @@
     animation: none;
   }
 }
+
+/* Contenido largo de las páginas SEO (sin depender de @tailwindcss/typography) */
+.rich-text h2 {
+  margin-top: 2.5rem;
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #101d69;
+}
+
+.rich-text h3 {
+  margin-top: 1.75rem;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #101d69;
+}
+
+.rich-text p {
+  margin-top: 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: #4b5563;
+}
+
+.rich-text .lead {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: #4b5563;
+}
+
+.rich-text ul,
+.rich-text ol {
+  margin-top: 1rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.rich-text ol {
+  list-style: decimal;
+}
+
+.rich-text li {
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+.rich-text a {
+  font-weight: 600;
+  color: #101d69;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rich-text a:hover {
+  color: #fd741a;
+}
+
+.rich-text strong {
+  font-weight: 600;
+  color: #111827;
+}
+
+.rich-text blockquote {
+  margin-top: 1.5rem;
+  border-left: 3px solid #fd741a;
+  padding-left: 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+.rich-text table {
+  margin-top: 1.5rem;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.rich-text th,
+.rich-text td {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.625rem 0.75rem;
+  text-align: left;
+  color: #4b5563;
+}
+
+.rich-text th {
+  font-weight: 700;
+  color: #101d69;
+  background-color: #f9fafb;
+}
+
+@media (min-width: 768px) {
+  .rich-text h2 {
+    font-size: 1.625rem;
+  }
+
+  .rich-text h3 {
+    font-size: 1.125rem;
+  }
+
+  .rich-text p,
+  .rich-text li {
+    font-size: 1rem;
+  }
+}

@@ -4,16 +4,23 @@ import Hero from '@/components/landing/Hero'
 import ShippingLinkFeature from '@/components/landing/ShippingLinkFeature'
 import BusinessTypes from '@/components/landing/BusinessTypes'
 import FeaturedFeatures from '@/components/landing/FeaturedFeatures'
-import DeferredPricing from '@/components/landing/DeferredPricing'
-import FAQ from '@/components/landing/FAQ'
+import PricingSection from '@/components/landing/PricingSection'
 import CustomSystems from '@/components/landing/CustomSystems'
+import FAQ from '@/components/landing/FAQ'
+import ExploreLinks from '@/components/landing/ExploreLinks'
 import Footer from '@/components/landing/Footer'
 import FloatingButtons from '@/components/landing/FloatingButtons'
+import JsonLd from '@/components/seo/json-ld'
 import { faqs } from '@/lib/faqs'
+import { absoluteUrl, siteDescription, siteName } from '@/lib/site'
+
+// Los planes se revalidan cada hora para que el HTML no quede con precios viejos.
+export const revalidate = 3600
 
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
+  '@id': `${absoluteUrl('/')}#faq`,
   mainEntity: faqs.map((faq) => ({
     '@type': 'Question',
     name: faq.question,
@@ -24,13 +31,28 @@ const faqJsonLd = {
   })),
 }
 
+const webPageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': absoluteUrl('/'),
+  url: absoluteUrl('/'),
+  name: 'Sistema de Facturación Electrónica SUNAT y POS en Perú',
+  description: siteDescription,
+  inLanguage: 'es-PE',
+  isPartOf: { '@id': `${absoluteUrl('/')}#website` },
+  about: { '@id': `${absoluteUrl('/')}#software` },
+  publisher: {
+    '@type': 'Organization',
+    name: siteName,
+    url: absoluteUrl('/'),
+  },
+}
+
 export default function Home() {
   return (
     <main className="relative w-full bg-white">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+      <JsonLd data={faqJsonLd} />
+      <JsonLd data={webPageJsonLd} />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute right-0 top-0 z-0 h-[560px] w-[60%] lg:h-[620px]"
@@ -51,7 +73,7 @@ export default function Home() {
       <ShippingLinkFeature />
       <BusinessTypes />
       <FeaturedFeatures />
-      <DeferredPricing />
+      <PricingSection />
       <div className="relative">
         <div
           aria-hidden="true"
@@ -69,6 +91,7 @@ export default function Home() {
         <CustomSystems />
         <FAQ />
       </div>
+      <ExploreLinks />
       <Footer />
       <FloatingButtons />
     </main>

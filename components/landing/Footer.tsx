@@ -1,12 +1,14 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import {
   WhatsappLogo,
   InstagramLogo,
   TiktokLogo,
 } from 'phosphor-react'
+import { company, loginUrl, registerUrl, whatsappUrl } from '@/lib/site'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -15,27 +17,29 @@ export default function Footer() {
     {
       title: 'Producto',
       links: [
-        { label: 'Planes', href: '#planes' },
-        { label: 'Sistemas a medida', href: '#sistemas' },
+        {
+          label: 'Facturación electrónica SUNAT',
+          href: '/facturacion-electronica',
+        },
+        { label: 'Sistema POS', href: '/sistema-pos' },
+        { label: 'Enlace de Envíos', href: '/envios' },
+        { label: 'Precios y planes', href: '/precios' },
       ],
     },
     {
       title: 'Empresa',
       links: [
-        { label: 'Nosotros', href: '#nosotros' },
+        { label: 'Sistemas a medida', href: '/sistemas-a-medida' },
+        { label: 'Consulta de comprobantes', href: '/consulta' },
+        { label: 'Ingresar', href: loginUrl, external: true },
+        { label: 'Crear cuenta', href: registerUrl, external: true },
       ],
     },
     {
       title: 'Legal',
       links: [
         { label: 'Política de privacidad', href: '/privacidad' },
-        { label: 'Términos', href: '/terminos' },
-      ],
-    },
-    {
-      title: 'Soporte',
-      links: [
-        { label: 'Consulta de comprobantes', href: '/consulta' },
+        { label: 'Términos y condiciones', href: '/terminos' },
       ],
     },
   ]
@@ -76,7 +80,7 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <Image
                 src="/logopng.webp"
-                alt="Nuvex Logo"
+                alt="Nuvex — POS y facturación electrónica SUNAT"
                 width={190}
                 height={63}
                 sizes="190px"
@@ -84,11 +88,12 @@ export default function Footer() {
               />
             </div>
             <p className="text-white/70 text-sm leading-relaxed mb-4">
-              El POS para tu tienda de ropa. Controla, vende, crece.
+              POS y facturación electrónica SUNAT para tiendas y negocios en Perú.
+              Controla, vende y crece desde un solo lugar.
             </p>
             <div className="flex gap-4">
               <a
-                href="https://www.instagram.com/nuvexpe/"
+                href={company.social[0]}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all"
@@ -97,7 +102,7 @@ export default function Footer() {
                 <InstagramLogo size={20} weight="bold" />
               </a>
               <a
-                href="https://www.tiktok.com/@nuvexpe"
+                href={company.social[1]}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all"
@@ -106,7 +111,7 @@ export default function Footer() {
                 <TiktokLogo size={20} weight="bold" />
               </a>
               <a
-                href="https://wa.me/51923328058"
+                href={whatsappUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all"
@@ -118,18 +123,27 @@ export default function Footer() {
           </motion.div>
 
           {/* Footer sections */}
-          {footerSections.map((section, index) => (
-            <motion.div key={index} variants={itemVariants}>
+          {footerSections.map((section) => (
+            <motion.div key={section.title} variants={itemVariants}>
               <h3 className="font-semibold text-base mb-4">{section.title}</h3>
               <ul className="space-y-3">
-                {section.links.map((link, linkIdx) => (
-                  <li key={linkIdx}>
-                    <a
-                      href={link.href}
-                      className="text-white/70 hover:text-white transition-colors text-sm"
-                    >
-                      {link.label}
-                    </a>
+                {section.links.map((link) => (
+                  <li key={link.href}>
+                    {'external' in link && link.external ? (
+                      <a
+                        href={link.href}
+                        className="text-white/70 hover:text-white transition-colors text-sm"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="text-white/70 hover:text-white transition-colors text-sm"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -149,6 +163,26 @@ export default function Footer() {
             <p>
               © {currentYear} Nuvex. Todos los derechos reservados.
             </p>
+            <address className="mt-2 not-italic text-white/60 text-xs leading-relaxed">
+              {company.legalName} · RUC {company.ruc}
+              <br />
+              {company.address.street}, {company.address.district},{' '}
+              {company.address.region} — {company.address.countryName}
+              <br />
+              <a
+                href={`tel:${company.phone}`}
+                className="hover:text-white transition-colors"
+              >
+                {company.phoneLabel}
+              </a>{' '}
+              ·{' '}
+              <a
+                href={`mailto:${company.email}`}
+                className="hover:text-white transition-colors"
+              >
+                {company.email}
+              </a>
+            </address>
           </div>
 
           {/* Security badges */}
@@ -159,7 +193,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-1">
               <span>✓</span>
-              <span>GDPR Compliant</span>
+              <span>Datos protegidos</span>
             </div>
           </div>
         </motion.div>
